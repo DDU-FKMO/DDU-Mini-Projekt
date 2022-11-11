@@ -1,0 +1,77 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "start-debug",
+            "group": "test",
+            "dependsOrder": "sequence",
+            "problemMatcher": [],
+            "dependsOn": ["update-dist", "start-server"]
+        },
+        {
+            "label": "run-dev",
+            "options": {
+                "cwd": "${workspaceFolder}/site"
+            },
+            "command": "npm run dev",
+            "isBackground": true,
+            "group": "test",
+            "type": "shell",
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "line": 1,
+                            "column": 1,
+                            "message": 1
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": {"regexp": "."},
+                        "endsPattern": {"regexp": "."}
+                    }
+                }
+            ]
+        },
+        {
+            "label": "start-server",
+            "options": {
+                "cwd": "${workspaceFolder}/server"
+            },
+            "command": "nodemon .",
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "line": 1,
+                            "column": 1,
+                            "message": 1
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": {"regexp": "."},
+                        "endsPattern": {"regexp": "."}
+                    }
+                }
+            ],
+            "isBackground": true,
+            "group": "test",
+            "type": "shell"
+        },
+        {
+            "label": "update-dist",
+            "type": "shell",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/site"
+            },
+            "command": "npm run build"
+        }
+    ]
+}

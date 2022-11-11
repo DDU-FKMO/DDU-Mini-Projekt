@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Debug server & page",
+            "url": "http://localhost:5000",
+            "preLaunchTask": "start-debug"
+        },
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Debug only page",
+            "url": "http://localhost:5173",
+            "preLaunchTask": "run-dev"
+        }
+    ]
+}
