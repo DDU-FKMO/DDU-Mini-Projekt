@@ -12,6 +12,18 @@ body {
     align-content: center;
 }
 
+main {
+    width: 100%;
+    min-height: 80vh;
+    padding: 0 3rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: var(--color-background);
+}
+
 
 @media (max-width: 1024px) {
 
