@@ -45,7 +45,7 @@
         align-content: center;
         font-size: 1.5rem;
         text-decoration: none;
-        color: #000000;
+        color: var(--color-heading);
     }
     nav {
         width: 70%;

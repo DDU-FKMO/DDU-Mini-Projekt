@@ -14,6 +14,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../site/dist/index.html'));
 });
 
+app.use('/*', express.static(path.join(__dirname, '../site/dist/index.html')));
+
 io.on('connection', (socket) => {
     console.log('a user connected to server');
 });

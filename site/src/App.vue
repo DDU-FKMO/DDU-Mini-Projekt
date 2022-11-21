@@ -14,18 +14,18 @@ import LoginPage from "./components/login/Login.vue";
 import NotFound from './components/Page404.vue';
 
 const routes = {
-    '/': MainPage,
-    '/login': LoginPage
+    '': MainPage,
+    'login': LoginPage
 };
 const names = {
-    '/': 'Home',
-    '/login': 'Login',
+    '': 'Home',
+    'login': 'Login',
 };
 
 export default defineComponent({
     data: function () {
         return {
-            currentPath: window.location.pathname,
+            currentPath: window.location.pathname.replace("/",""),
         };
     },
     components: {
@@ -33,7 +33,7 @@ export default defineComponent({
     },
     computed: {
         currentView() {
-            var newPage = routes[this.currentPath || '/'] || NotFound;
+            var newPage = routes[this.currentPath || ''] || NotFound;
             if (newPage != NotFound) {
                 var name = names[this.currentPath];
                 document.title = name + ' | Title';
