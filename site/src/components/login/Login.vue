@@ -23,7 +23,7 @@
 </template>
 
 <script>
-
+import {IO} from "../../main";
 export default {
     mounted() {
         if(window.location.search != "") {
