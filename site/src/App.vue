@@ -11,21 +11,24 @@ import Footer from "./components/Footer.vue";
 import {defineComponent} from 'vue';
 import MainPage from "./components/MainPage.vue";
 import LoginPage from "./components/login/Login.vue";
+import RegPage from "./components/login/register.vue";
 import NotFound from './components/Page404.vue';
 
 const routes = {
-    '': MainPage,
-    'login': LoginPage
+    '/': MainPage,
+    '/login': LoginPage,
+    '/register': RegPage
 };
 const names = {
-    '': 'Home',
-    'login': 'Login',
+    '/': 'Home',
+    '/login': 'Login',
+    '/register': 'Register'
 };
 
 export default defineComponent({
     data: function () {
         return {
-            currentPath: window.location.pathname.replace("/",""),
+            currentPath: window.location.pathname,
         };
     },
     components: {
@@ -33,7 +36,7 @@ export default defineComponent({
     },
     computed: {
         currentView() {
-            var newPage = routes[this.currentPath || ''] || NotFound;
+            var newPage = routes[this.currentPath || '/'] || NotFound;
             if (newPage != NotFound) {
                 var name = names[this.currentPath];
                 document.title = name + ' | Title';

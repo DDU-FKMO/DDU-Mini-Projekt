@@ -18,7 +18,7 @@
             </fieldset>
             <input type="submit" id="submit" value="Login"/>
         </form>
-        <button>Register new user</button>
+        <button onclick="location.href = '/register'">Register new user</button>
     </main>
 </template>
 
