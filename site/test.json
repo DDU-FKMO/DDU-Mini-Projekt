@@ -1,0 +1,12 @@
+{
+    "testName": "placeholder name",
+    "questions": [
+        {"questionName": "placeholder name",
+        "inputText": "placeholder text",
+        "inputImage": "placeholder filepath",
+        "inputFile": "placeholder filepath",
+        "responseType": 1,
+        "responseOptions": ["placeholder1","placeholder2"],
+        "correctOption": 1}
+    ]
+}

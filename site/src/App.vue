@@ -13,17 +13,20 @@ import MainPage from "./components/MainPage.vue";
 import LoginPage from "./components/login/Login.vue";
 import RegPage from "./components/login/register.vue";
 import NotFound from './components/Page404.vue';
+import Opgaver from './components/assignments/Opgaver.vue';
 
 import {IO, getLoggedIn, setLoggedIn} from "./main";
 const routes = {
     '/': MainPage,
     '/login': LoginPage,
-    '/register': RegPage
+    '/register': RegPage,
+    '/opgaver': Opgaver
 };
 const names = {
     '/': 'Home',
     '/login': 'Login',
-    '/register': 'Register'
+    '/register': 'Register',
+    '/opgaver': 'Opgaver'
 };
 
 export default defineComponent({
