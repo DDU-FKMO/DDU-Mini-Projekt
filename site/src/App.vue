@@ -14,6 +14,7 @@ import LoginPage from "./components/login/Login.vue";
 import RegPage from "./components/login/register.vue";
 import NotFound from './components/Page404.vue';
 
+import {IO, getLoggedIn, setLoggedIn} from "./main";
 const routes = {
     '/': MainPage,
     '/login': LoginPage,
@@ -36,6 +37,16 @@ export default defineComponent({
     },
     computed: {
         currentView() {
+            //Check login status
+            var loggedIn = getLoggedIn();
+            if(loggedIn) {
+                if(this.currentPath == "/login") {
+                    this.currentPath = "/";
+                }
+            } else if(this.currentPath != "/login") {
+                IO.socket.emit("session", window.localStorage.getItem("session"));
+            }
+
             var newPage = routes[this.currentPath || '/'] || NotFound;
             if (newPage != NotFound) {
                 var name = names[this.currentPath];
@@ -49,7 +60,9 @@ export default defineComponent({
     mounted() {
         window.addEventListener('hashchange', () => {
             this.currentPath = window.location.pathname;
+            console.log("Logged in: " + getLoggedIn());
         });
+        console.log("Logged in: " + getLoggedIn());
     },
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
     <main>
-        <form name="login" target="">
+        <form name="login" action="/login-post" method="POST">
             <fieldset>
                 <label for="email">Email: </label>
                 <input type="email" id="email" name="Email" required/>
@@ -9,13 +9,6 @@
                 <label for="password">Password: </label>
                 <input type="password" id="password" name="Password" required/>
             </fieldset>
-            <fieldset>
-                <label for="type">User Type: </label>
-                <select id="type" name="types" size="2" single required>
-                    <option value="user">Student</option>
-                    <option value="teacher">Teacher</option>
-                </select>
-            </fieldset>
             <input type="submit" id="submit" value="Login"/>
         </form>
         <button onclick="location.href = '/register'">Register new user</button>
@@ -23,17 +16,19 @@
 </template>
 
 <script>
-import {IO} from "../../main";
+import {setLoggedIn} from "../../main";
 export default {
     mounted() {
-        if(window.location.search != "") {
-            //Login
-            let params = new URLSearchParams(location.search);
-            let email = params.get("Email");
-            let password = params.get("Password");
-            let type = params.get("types");
-            window.history.replaceState({}, document.title, "/" + "login");
-            console.log(`Email:${email} Password:${password} Type:${type}`);
+        var hash = window.location.hash.replace("#","");
+        if(hash != "") {
+            if(hash == "error") {
+                setLoggedIn(false);
+                alert("Brugernavn eller adgangskode var forkert!");
+            } else {
+                setLoggedIn(true);
+                window.localStorage.setItem("session", hash);
+                window.location.href = "/";
+            }
         }
     }
 }
