@@ -11,7 +11,7 @@ import Footer from './components/Footer.vue';
 import {defineComponent, getCurrentInstance} from 'vue';
 import MainPage from './components/MainPage.vue';
 import LoginPage from './components/login/Login.vue';
-import RegPage from './components/login/register.vue';
+import RegPage from './components/login/Register.vue';
 import NotFound from './components/Page404.vue';
 import Opgaver from './components/assignments/Opgaver.vue';
 
@@ -46,10 +46,10 @@ export default defineComponent({
             var loggedIn = getLoggedIn();
             if (loggedIn) {
                 console.log('Logged in');
-                if (this.currentPath == '/login') {
+                if (this.currentPath == '/login' || this.currentPath == '/register') {
                     this.currentPath = '/';
                 }
-            } else if (this.currentPath != '/login') {
+            } else if (this.currentPath != '/login' && this.currentPath != '/register') {
                 if (this.checkingSession == false) {
                     this.checkingSession = true;
                     IO.socket.emit('session', window.localStorage.getItem('session'));

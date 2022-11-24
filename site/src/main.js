@@ -24,11 +24,13 @@ export var IO = {
         IO.socket.on('session', (data) => {
             setLoggedIn(data.approved, data.userId);
             if (data.approved) {
-                if (window.location.pathname == '/login') {
+                if (window.location.pathname == '/login' || window.location.pathname == '/register') {
                     window.location.pathname = '/';
                 }
             } else {
-                window.location.pathname = '/login';
+                if (window.location.pathname != '/login' && window.location.pathname != '/register') {
+                    window.location.pathname = '/login';
+                }
             }
         });
     },

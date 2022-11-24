@@ -51,3 +51,28 @@ app.post('/login-post', function (req, res) {
             res.redirect('/login#error');
         });
 });
+
+//Register post request
+app.post('/register-post', function (req, res) {
+    var email = req.body.Email;
+    var username = req.body.Name;
+    var password = req.body.Password;
+    var type = req.body.Type;
+
+    //Check if correct with database
+    database
+        .addUserInfo(email, username, password, type == 'teacher' ? true : false)
+        .then((id) => {
+            if (id) {
+                database.addSession(id, req.connection.remoteAddress).then((sessionId) => {
+                    res.redirect('/login#' + sessionId);
+                });
+            } else {
+                res.redirect('/register#error');
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.redirect('/register#error');
+        });
+});

@@ -2,10 +2,14 @@
     <main>
         <div id="app">
             <h1>Register</h1>
-            <form name="register" class="form-group" target="">
+            <form name="register" class="form-group" action="/register-post" method="POST">
                 <fieldset>
                     <label for="email">Email: </label>
                     <input v-model="emailReg" type="email" id="email" name="Email" required />
+                </fieldset>
+                <fieldset>
+                    <label for="name">Name: </label>
+                    <input v-model="nameReg" type="text" id="name" name="Name" required />
                 </fieldset>
                 <fieldset>
                     <label for="password">Password: </label>
@@ -20,26 +24,25 @@
                 </fieldset>
                 <input type="submit" id="submit" value="Register" @click="doRegister" />
             </form>
-            <button onclick="location.href = '/login'">Have a user? Login</button>
+            <a href="/login">
+                <button href="/register" onclick="location.href = '/register';">Have an account? Login</button>
+            </a>
         </div>
     </main>
 </template>
 
 <script>
-
 export default {
     mounted() {
-         if(window.location.search != "") {
-             //Login
-             let params = new URLSearchParams(location.search);
-             let email = params.get("Email");
-             let password = params.get("Password");
-             let type = params.get("types");
-             window.history.replaceState({}, document.title, "/" + "register");
-             console.log(`Email:${email} Password:${password} Type:${type}`);
-         }
-    }
-}
+        var hash = window.location.hash.replace('#', '');
+        if (hash != '') {
+            if (hash == 'error') {
+                setLoggedIn(false);
+                alert('Brugernavn eller adgangskode var forkert!');
+            }
+        }
+    },
+};
 </script>
 
 <style scoped>
@@ -81,7 +84,6 @@ form #submit:hover {
     border-color: var(--color-border-hover);
 }
 
-
 button {
     border-radius: 0;
     width: 10rem;
@@ -96,4 +98,3 @@ button:hover {
     border-color: var(--color-border-hover);
 }
 </style>
-
