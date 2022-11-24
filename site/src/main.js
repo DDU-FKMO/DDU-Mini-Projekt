@@ -1,8 +1,14 @@
 import {io} from 'socket.io-client';
 var loggedIn = false;
-export function setLoggedIn(value) {loggedIn = value}
-export function getLoggedIn() {return loggedIn}
-/*For testing:*/ loggedIn = true;
+/*For testing:*/ loggedIn = false;
+var userId;
+export function setLoggedIn(value, user) {
+    loggedIn = value;
+    userId = user;
+}
+export function getLoggedIn() {
+    return loggedIn;
+}
 
 //Connection with server
 export var IO = {
@@ -13,38 +19,35 @@ export var IO = {
 
     bindEvents: function () {
         IO.socket.on('connected', IO.onConnected);
-        IO.socket.on('error', function (e) {
-            console.error(e);
-        });
+        IO.socket.on('error', IO.error);
         //Session
-        IO.socket.on("session", (approved) => {
-            console.log("Data: " + approved);
-            setLoggedIn(approved);
-            if(approved) {
-                if(window.location.pathname == "/login") {
-                    window.location.pathname = "/";
+        IO.socket.on('session', (data) => {
+            setLoggedIn(data.approved, data.userId);
+            if (data.approved) {
+                if (window.location.pathname == '/login') {
+                    window.location.pathname = '/';
                 }
             } else {
-                window.location.pathname = "/login";
+                window.location.pathname = '/login';
             }
         });
     },
 
     onConnected: function () {
-        console.log("Succesfully connected to server (" + IO.socket.id + ")");
-        IO.socket.emit("test");
+        console.log('Succesfully connected to server (' + IO.socket.id + ')');
+        //IO.socket.emit('test');
     },
 
     error: function (data) {
-        alert('Something went wrong' + data);
+        alert('Something went wrong \n' + data);
     },
 };
 IO.init();
 
 //Mount App
-import { createApp } from 'vue';
+import {createApp} from 'vue';
 import App from './App.vue';
 import './assets/main.css';
 
 createApp(App).mount('body');
-window.sessionStorage.setItem("Test","test");
+window.sessionStorage.setItem('Test', 'test');
