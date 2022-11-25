@@ -8,9 +8,10 @@ let db = new sqlite3.Database('./users.db', (err) => {
 });
 
 function addUserInfo(email, username, password, teacher) {
+    let teachBool = teacher ? 1 : 0;
     console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO users (userrname, email, password, teacher) VALUES (?, ?, ?, ?)', [username, email, password, teacher], function (err) {
+        db.run('INSERT INTO users (userrname, email, password, teacher) VALUES (?, ?, ?, ?)', [username, email, password, teachBool], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -19,6 +20,58 @@ function addUserInfo(email, username, password, teacher) {
         });
     });
 }
+
+function addUserClass(id, inviteCode){
+     return new Promise((resolve, reject) => {
+        db.run('INSERT INTO dist (UserId, classId) VALUES (?, (SELECT id FROM class WHERE inviteCode = ?))', [id, inviteCode], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+function addTest(klasseId, questions, name){
+    return new Promise((resolve, reject) => {
+        db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, name], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                addClassTest(klasseId, name); // burde nok tilføjes error handling til denne?
+                resolve(true);
+            }
+        });
+    });
+}
+
+function addClassTest(klasseId,name){
+    return new Promise((resolve, reject) => {
+        db.run('INSERT INTO assignments (classId, testId) VALUES (?, (SELECT id FROM tests WHERE name = ?))', [klasseId, name], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+function addResults(userId,testId,date, result){
+    return new Promise((resolve, reject) => {
+        db.run('INSERT INTO results (userId,testId,date, result) VALUES (?, ?,?,?)', [userId,testId,date, result], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+
+
 
 function checkUserInfo(email, password) {
     return new Promise((resolve, reject) => {
@@ -67,4 +120,8 @@ module.exports = {
     checkUserInfo,
     addSession,
     checkSession,
+    addUserClass,
+    addTest,
+    addClassTest,
+    addResults,
 };
