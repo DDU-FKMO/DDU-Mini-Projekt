@@ -24,6 +24,32 @@ main {
     background-color: var(--color-background);
 }
 
+nav {
+    width: 70%;
+    height: 100%;
+    margin: 0 0 0 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+}
+nav a {
+    height: 100%;
+    color: var(--color-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 400;   
+    flex: auto;
+    transition: background-color 1s, font-weight 1s;
+}
+nav a:hover {
+    background-color: #00000075;
+    font-weight: 600;
+}
 
 @media (max-width: 1024px) {
 

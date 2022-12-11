@@ -1,0 +1,3 @@
+<template>
+    Opret klasse
+</template>
