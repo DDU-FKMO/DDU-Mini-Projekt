@@ -1,5 +1,5 @@
 import {io} from 'socket.io-client';
-var loggedIn = false;
+var loggedIn = true;
 
 var userInfo = {id: 0, name: "Test", teacher: true};
 export function setLoggedIn(value, user) {
