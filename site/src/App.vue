@@ -54,25 +54,28 @@ export default defineComponent({
             //Check login status
             var loggedIn = getLoggedIn();
             if (loggedIn) {
-                ///console.log('Logged in');
+                console.log('Logged in');
                 if (this.currentPath == '/login' || this.currentPath == '/register') {
                     window.history.pushState({}, "", "/");
                     this.currentPath = "/";
                 }
-                //Show page
-                var newPage = routes[this.currentPath || '/'] || {"page": NotFound, "title": "404 - Not Found"};
-                document.title = newPage.title + ' | Title';
-                Component = newPage.page;
-            } else if (this.currentPath != '/login' && this.currentPath != '/register') {
-                ///console.log("Not logged in");
+            } else if(this.currentPath != "/register" && this.currentPath != "/login") {
+                console.log("Not logged in");
                 if (this.checkingSession == false) {
+                    console.log("Emit...");
                     this.checkingSession = true;
                     IO.socket.emit('session', window.localStorage.getItem('session'));
-                    Component = null;
+                    return;
                 } else {
+                    this.changePage("/login");
                     return;
                 }
             }
+            //Show page
+            var newPage = routes[this.currentPath || '/'] || {"page": NotFound, "title": "404 - Not Found"};
+            document.title = newPage.title + ' | Title';
+            Component = newPage.page;
+            //Mount...
             if(oldApp) {
                 oldApp.unmount();
             }
@@ -82,6 +85,7 @@ export default defineComponent({
             Header.methods.updateNavbar();
         },
         changePage(newPage) {
+            console.log("Changing page to " + newPage);
             window.history.pushState({}, "", location.origin + newPage);
             this.currentPath = newPage;
             this.updateView();

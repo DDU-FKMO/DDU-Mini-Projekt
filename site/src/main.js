@@ -1,5 +1,5 @@
 import {io} from 'socket.io-client';
-var loggedIn = true;
+var loggedIn = false;
 
 var userInfo = {id: 0, name: "Test", teacher: true};
 export function setLoggedIn(value, user) {
@@ -27,6 +27,7 @@ export var IO = {
         IO.socket.on('error', IO.error);
         //Session
         IO.socket.on('session', (data) => {
+            console.log("recieved session info...");
             setLoggedIn(data.approved, data.user);
             if (data.approved) {
                 if (window.location.pathname == '/login' || window.location.pathname == '/register') {
