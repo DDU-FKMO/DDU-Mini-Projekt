@@ -11,7 +11,7 @@ function addUserInfo(email, username, password, teacher) {
     let teachBool = teacher ? 1 : 0;
     console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO users (userrname, email, password, teacher) VALUES (?, ?, ?, ?)', [username, email, password, teachBool], function (err) {
+        db.run('INSERT INTO users (username, email, password, teacher) VALUES (?, ?, ?, ?)', [username, email, password, teachBool], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -33,22 +33,22 @@ function addUserClass(id, inviteCode){
     });
 }
 
-function addTest(klasseId, questions, name){
+function addTest(klasseId, questions, testName){
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, name], function (err) {
+        db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
-                addClassTest(klasseId, name); // burde nok tilføjes error handling til denne?
+                addClassTest(klasseId, testName); // burde nok tilføjes error handling til denne?
                 resolve(true);
             }
         });
     });
 }
 
-function addClassTest(klasseId,name){
+function addClassTest(klasseId,testName){
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO assignments (classId, testId) VALUES (?, (SELECT id FROM tests WHERE name = ?))', [klasseId, name], function (err) {
+        db.run('INSERT INTO assignments (classId, testId) VALUES (?, (SELECT id FROM tests WHERE name = ?))', [klasseId, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -69,6 +69,25 @@ function addResults(userId,testId,date, result){
         });
     });
 }
+
+function getUserClass(userId){
+    return new Promise((resolve, reject) => {
+        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err,row) {
+            if (err) {
+                reject(err);
+            } else {
+                let data = []
+                rows.forEach((row) => {
+                    data.
+                    classId = row.classId;
+                    className = row.className;
+                });
+                resolve(row.classId,row.className);
+            }
+        });
+    });
+}
+
 
 
 
@@ -105,7 +124,7 @@ function checkSession(sessionId, ip) {
                     reject('Session not found');
                 } else {
                     if (row.Ip == ip) {
-                        resolve(row.UserId);
+                        resolve(row.userId);
                     } else {
                         reject('Ip mismatch');
                     }
@@ -124,4 +143,5 @@ module.exports = {
     addTest,
     addClassTest,
     addResults,
+    getUserClass,
 };
