@@ -167,6 +167,7 @@ module.exports = {
     addClass,
     addTest,
     addClassTest,
+    getUserList,
     addResults,
     getUserClass,
 };
