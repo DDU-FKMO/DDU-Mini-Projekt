@@ -1,3 +1,3 @@
 <template>
-    Klasse 1
+    Opgaver:
 </template>

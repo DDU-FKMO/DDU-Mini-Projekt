@@ -1,3 +1,3 @@
 <template>
-    Klasse 1
+    Opgave 1
 </template>

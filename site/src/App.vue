@@ -10,12 +10,17 @@ import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
 import {createApp, defineComponent, ref} from 'vue';
+import NotFound from './components/Page404.vue';
 import MainPage from './components/MainPage.vue';
+//Login
 import LoginPage from './components/login/Login.vue';
 import RegPage from './components/login/Register.vue';
-import NotFound from './components/Page404.vue';
-import Opgaver from './components/assignments/Opgaver.vue';
+//Klasser
 import Klasser from "./components/shared/KlasseOverview.vue";
+import OpretKlasse from "./components/lærer/OpretKlasse.vue";
+//Opgaver
+import Opgaver from './components/shared/OpgaveOverview.vue';
+import OpretOpgave from './components/lærer/OpretPrøve.vue';
 
 import {IO, getLoggedIn, setLoggedIn} from './main';
 
@@ -25,6 +30,8 @@ const routes = {
     '/register': {"page": RegPage, "title": "Register"},
     '/opgaver': {"page":  Opgaver, "title": "Opgaver"},
     "/klasser": {"page": Klasser, "title": "Klasser"},
+    "/opret_klasse": {"page": OpretKlasse, "title": "Opret Klasse"},
+    "/opret_opgave": {"page": OpretOpgave, "title": "Opret Prøve"}
 };
 
 var Component = LoginPage;
