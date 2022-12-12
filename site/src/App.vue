@@ -5,7 +5,6 @@
 </template>
 
 <script>
-//<component :is="currentView" :key="currentPath" />
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
@@ -19,7 +18,7 @@ import RegPage from './components/login/Register.vue';
 import Klasser from "./components/shared/KlasseOverview.vue";
 import OpretKlasse from "./components/lærer/OpretKlasse.vue";
 //Opgaver
-import Opgaver from './components/shared/OpgaveOverview.vue';
+import Opgaver from './components/shared/PrøveOverview.vue';
 import OpretOpgave from './components/lærer/OpretPrøve.vue';
 
 import {IO, getLoggedIn, setLoggedIn} from './main';
@@ -28,7 +27,7 @@ const routes = {
     '/': {"page": MainPage, "title": "Home"},
     '/login': {"page": LoginPage, "title": "Login"},
     '/register': {"page": RegPage, "title": "Register"},
-    '/opgaver': {"page":  Opgaver, "title": "Opgaver"},
+    '/opgaver': {"page":  Opgaver, "title": "Prøver"},
     "/klasser": {"page": Klasser, "title": "Klasser"},
     "/opret_klasse": {"page": OpretKlasse, "title": "Opret Klasse"},
     "/opret_opgave": {"page": OpretOpgave, "title": "Opret Prøve"}
@@ -54,25 +53,28 @@ export default defineComponent({
             //Check login status
             var loggedIn = getLoggedIn();
             if (loggedIn) {
-                ///console.log('Logged in');
+                console.log('Logged in');
                 if (this.currentPath == '/login' || this.currentPath == '/register') {
                     window.history.pushState({}, "", "/");
                     this.currentPath = "/";
                 }
-                //Show page
-                var newPage = routes[this.currentPath || '/'] || {"page": NotFound, "title": "404 - Not Found"};
-                document.title = newPage.title + ' | Title';
-                Component = newPage.page;
-            } else if (this.currentPath != '/login' && this.currentPath != '/register') {
-                ///console.log("Not logged in");
+            } else if(this.currentPath != "/register" && this.currentPath != "/login") {
+                console.log("Not logged in");
                 if (this.checkingSession == false) {
+                    console.log("Emit...");
                     this.checkingSession = true;
                     IO.socket.emit('session', window.localStorage.getItem('session'));
-                    Component = null;
+                    return;
                 } else {
+                    this.changePage("/login");
                     return;
                 }
             }
+            //Show page
+            var newPage = routes[this.currentPath || '/'] || {"page": NotFound, "title": "404 - Not Found"};
+            document.title = newPage.title + ' | Title';
+            Component = newPage.page;
+            //Mount...
             if(oldApp) {
                 oldApp.unmount();
             }
@@ -82,6 +84,7 @@ export default defineComponent({
             Header.methods.updateNavbar();
         },
         changePage(newPage) {
+            console.log("Changing page to " + newPage);
             window.history.pushState({}, "", location.origin + newPage);
             this.currentPath = newPage;
             this.updateView();

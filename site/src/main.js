@@ -27,6 +27,7 @@ export var IO = {
         IO.socket.on('error', IO.error);
         //Session
         IO.socket.on('session', (data) => {
+            console.log("recieved session info...");
             setLoggedIn(data.approved, data.user);
             if (data.approved) {
                 if (window.location.pathname == '/login' || window.location.pathname == '/register') {
