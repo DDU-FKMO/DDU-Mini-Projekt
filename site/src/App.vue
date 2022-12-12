@@ -10,12 +10,17 @@ import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
 import {createApp, defineComponent, ref} from 'vue';
+import NotFound from './components/Page404.vue';
 import MainPage from './components/MainPage.vue';
+//Login
 import LoginPage from './components/login/Login.vue';
 import RegPage from './components/login/Register.vue';
-import NotFound from './components/Page404.vue';
-import Opgaver from './components/assignments/Opgaver.vue';
+//Klasser
 import Klasser from "./components/shared/KlasseOverview.vue";
+import OpretKlasse from "./components/lærer/OpretKlasse.vue";
+//Opgaver
+import Opgaver from './components/shared/OpgaveOverview.vue';
+import OpretOpgave from './components/lærer/OpretPrøve.vue';
 
 import {IO, getLoggedIn, setLoggedIn} from './main';
 
@@ -25,6 +30,8 @@ const routes = {
     '/register': {"page": RegPage, "title": "Register"},
     '/opgaver': {"page":  Opgaver, "title": "Opgaver"},
     "/klasser": {"page": Klasser, "title": "Klasser"},
+    "/opret_klasse": {"page": OpretKlasse, "title": "Opret Klasse"},
+    "/opret_opgave": {"page": OpretOpgave, "title": "Opret Prøve"}
 };
 
 var Component = LoginPage;
@@ -35,7 +42,6 @@ export default defineComponent({
         return {
             currentPath: window.location.pathname,
             checkingSession: false,
-            update: 0,
         };
     },
     components: {
@@ -44,11 +50,11 @@ export default defineComponent({
     },
     methods: {
         updateView() {
-            console.log("Loading page");
+            console.log("Loading page with path: " + this.currentPath);
             //Check login status
             var loggedIn = getLoggedIn();
             if (loggedIn) {
-                console.log('Logged in');
+                ///console.log('Logged in');
                 if (this.currentPath == '/login' || this.currentPath == '/register') {
                     window.history.pushState({}, "", "/");
                     this.currentPath = "/";
@@ -58,12 +64,11 @@ export default defineComponent({
                 document.title = newPage.title + ' | Title';
                 Component = newPage.page;
             } else if (this.currentPath != '/login' && this.currentPath != '/register') {
-                console.log("Not logged in");
+                ///console.log("Not logged in");
                 if (this.checkingSession == false) {
                     this.checkingSession = true;
                     IO.socket.emit('session', window.localStorage.getItem('session'));
-                    document.title = "Login" + ' | Title';
-                    Component = LoginPage;
+                    Component = null;
                 } else {
                     return;
                 }
@@ -76,18 +81,14 @@ export default defineComponent({
             //Update navbar
             Header.methods.updateNavbar();
         },
-    },
-    watch: {
-        currentPath() {
-            var path = this.currentPath;
-            console.log("Current path changed to: " + path);
+        changePage(newPage) {
+            window.history.pushState({}, "", location.origin + newPage);
+            this.currentPath = newPage;
+            this.updateView();
         }
     },
     mounted() {
         this.updateView();
-        window.addEventListener('hashchange', () => {
-            this.currentPath = window.location.pathname;
-        });
     },
 });
 </script>

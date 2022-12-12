@@ -4,9 +4,8 @@
         {"questionName": "placeholder name",
         "inputText": "placeholder text",
         "inputImage": "placeholder filepath",
-        "inputFile": "placeholder filepath",
         "responseType": 1,
-        "responseOptions": ["placeholder1","placeholder2"],
+        "responseOptions": ["placeholder1","placeholder2","placeholder3","placeholder4"],
         "correctOption": 1}
     ]
 }
