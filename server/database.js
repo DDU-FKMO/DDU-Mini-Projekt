@@ -7,6 +7,7 @@ let db = new sqlite3.Database('./users.db', (err) => {
     console.log('Connected to the database.');
 });
 
+//User...
 function addUserInfo(email, username, password, teacher) {
     let teachBool = teacher ? 1 : 0;
     //console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
@@ -20,7 +21,18 @@ function addUserInfo(email, username, password, teacher) {
         });
     });
 }
-
+function getUserClass(userId) {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err, result, fields) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+//Class...
 function addClass(className, inviteCode) {
     let teachBool = teacher ? 1 : 0;
     //console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
@@ -34,9 +46,8 @@ function addClass(className, inviteCode) {
         });
     });
 }
-
-function addUserClass(id, inviteCode){
-     return new Promise((resolve, reject) => {
+function addUserClass(id, inviteCode) {
+    return new Promise((resolve, reject) => {
         db.run('INSERT INTO dist (UserId, classId) VALUES (?, (SELECT id FROM class WHERE inviteCode = ?))', [id, inviteCode], function (err) {
             if (err) {
                 reject(err);
@@ -46,35 +57,33 @@ function addUserClass(id, inviteCode){
         });
     });
 }
-
-function addTest(klasseId, questions, testName){
+function getUserList(classId) {
+    return new Promise((resolve, reject) => {
+        db.all('select username from dist left join users on dist.userId = users.id where classId = ?', [classId], function (err, result, fields) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
+//Test...
+function addTest(classId, questions, testName) {
     return new Promise((resolve, reject) => {
         db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
-                addClassTest(klasseId, testName); // burde nok tilføjes error handling til denne?
+                addClassTest(classId, testName); // burde nok tilføjes error handling til denne?
                 resolve(true);
             }
         });
     });
 }
-
-function addClassTest(klasseId,testName){
+function addClassTest(classId, testName) {
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO assignments (classId, testId) VALUES (?, (SELECT id FROM tests WHERE name = ?))', [klasseId, testName], function (err) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(true);
-            }
-        });
-    });
-}
-
-function addResults(userId,testId,date, result){
-    return new Promise((resolve, reject) => {
-        db.run('INSERT INTO results (userId,testId,date, result) VALUES (?, ?,?,?)', [userId,testId,date, result], function (err) {
+        db.run('INSERT INTO assignments (classId, testId) VALUES (?, (SELECT id FROM tests WHERE name = ?))', [classId, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -83,36 +92,78 @@ function addResults(userId,testId,date, result){
         });
     });
 }
-
-function getUserClass(userId){
+function addResults(userId, testId, date, result) {
     return new Promise((resolve, reject) => {
-        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err,result, fields) {
+        db.run('INSERT INTO results (userId,testId,date, result) VALUES (?, ?,?,?)', [userId, testId, date, result], function (err) {
             if (err) {
                 reject(err);
             } else {
-                resolve(result)
+                resolve(true);
             }
         });
     });
 }
-
-function getUserList(classId){
+function getTests(userId) {
+    let testData = [];
     return new Promise((resolve, reject) => {
-        db.all('select username from dist left join users on dist.userId = users.id where classId = ?', [classId], function (err,result, fields) {
-            if (err) {
+        //Classes
+        getUserClass(userId)
+            .then((classes) => {
+                ///console.log('Classes: ');
+                ///console.log(classes);
+                new Promise((resolve, reject) => {
+                    for (let i = 0; i < classes.length; i++) {
+                        //Assignments
+                        db.all('SELECT * FROM assignments WHERE classId = ?', [classes[i].classId], function (err, assignments) {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                ///console.log('Assignments: ');
+                                ///console.log(assignments);
+                                new Promise((resolve, reject) => {
+                                    for (let j = 0; j < assignments.length; j++) {
+                                        //Tests
+                                        db.get('SELECT * FROM tests WHERE id = ?', [assignments[j].testId], function (err, test) {
+                                            if (err) {
+                                                reject(err);
+                                            } else {
+                                                ///console.log('Test: ');
+                                                ///console.log(test);
+                                                testData.push({id: test.id, className: classes[i].className, classId: classes[i].classId, questions: test.questions, date: assignments[j].date});
+                                                resolve();
+                                            }
+                                        });
+                                    }
+                                })
+                                    .then(() => {
+                                        resolve();
+                                    })
+                                    .catch((err) => {
+                                        reject(err);
+                                    });
+                            }
+                        });
+                    }
+                })
+                    .then(() => {
+                        ///console.log('Testdata: ');
+                        ///console.log(testData);
+                        resolve(testData);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            })
+            .catch((err) => {
                 reject(err);
-            } else {
-                resolve(result)
-            }
-        });
+            });
     });
 }
 
-
-
+//Login...
 function checkUserInfo(email, password) {
     return new Promise((resolve, reject) => {
-        db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function (err,result, fields) {
+        db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function (err, result, fields) {
             if (err) {
                 reject(err);
             } else {
@@ -142,8 +193,8 @@ function checkSession(sessionId, ip) {
                     reject('Session not found');
                 } else {
                     if (row.ip == ip) {
-                        db.get("SELECT * FROM users WHERE id = ?", [row.userId], (err, row) => {
-                            if(err || row == undefined) {
+                        db.get('SELECT * FROM users WHERE id = ?', [row.userId], (err, row) => {
+                            if (err || row == undefined) {
                                 reject(err);
                             } else {
                                 resolve({id: row.id, name: row.username, teacher: row.teacher});
@@ -160,14 +211,15 @@ function checkSession(sessionId, ip) {
 
 module.exports = {
     addUserInfo,
+    getUserClass,
     checkUserInfo,
     addSession,
     checkSession,
     addUserClass,
     addClass,
-    addTest,
     addClassTest,
     getUserList,
+    addTest,
     addResults,
-    getUserClass,
+    getTests,
 };

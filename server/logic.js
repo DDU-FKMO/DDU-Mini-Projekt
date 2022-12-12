@@ -26,6 +26,31 @@ io.on('connection', (socket) => {
                 socket.emit('session', {approved: false, user: null});
             });
     });
+
+    //Prøve info
+    socket.on('getPrøver', (data) => {
+        //Check if session is correct with database
+        database
+            .checkSession(data.session, socket.request.connection.remoteAddress)
+            .then((userInfo) => {
+                if (userInfo.id == data.user) {
+                    database
+                        .getTests(data.user)
+                        .then((prøver) => {
+                            console.log(prøver);
+                            socket.emit('prøveInfo', prøver);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    throw new Error('Session and user id does not match');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
 });
 
 //Login post request

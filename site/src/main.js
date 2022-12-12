@@ -1,12 +1,11 @@
 import {io} from 'socket.io-client';
-var loggedIn = true;
 
-var userInfo = {id: 0, name: "Test", teacher: true};
+var loggedIn = true;
+var userInfo = {id: 0, name: 'Test', teacher: true};
+
 export function setLoggedIn(value, user) {
     loggedIn = value;
     userInfo = user;
-    console.log("Updated user");
-    console.log(user);
 }
 export function getLoggedIn() {
     return loggedIn;
@@ -27,17 +26,17 @@ export var IO = {
         IO.socket.on('error', IO.error);
         //Session
         IO.socket.on('session', (data) => {
-            console.log("recieved session info...");
+            console.log('recieved session info...');
             setLoggedIn(data.approved, data.user);
             if (data.approved) {
                 if (window.location.pathname == '/login' || window.location.pathname == '/register') {
-                    App.methods.changePage("/");
+                    App.methods.changePage('/');
                 } else {
                     App.methods.changePage(App.data().currentPath);
                 }
             } else {
                 if (window.location.pathname != '/login' && window.location.pathname != '/register') {
-                    App.methods.changePage("/login");
+                    App.methods.changePage('/login');
                 } else {
                     App.methods.changePage(window.location.pathname);
                 }
