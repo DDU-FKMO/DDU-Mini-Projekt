@@ -30,16 +30,16 @@ export var IO = {
             setLoggedIn(data.approved, data.user);
             if (data.approved) {
                 if (window.location.pathname == '/login' || window.location.pathname == '/register') {
-                    window.history.pushState({}, "", "/");
-                    App.data().currentPath = "/";
+                    App.methods.changePage("/");
+                } else {
+                    App.methods.changePage(App.data().currentPath);
                 }
-                App.methods.updateView();
             } else {
                 if (window.location.pathname != '/login' && window.location.pathname != '/register') {
-                    window.history.pushState({}, "", "/login");
-                    App.data().currentPath = "/login";
+                    App.methods.changePage("/login");
+                } else {
+                    App.methods.updateView();
                 }
-                App.methods.updateView();
             }
         });
     },

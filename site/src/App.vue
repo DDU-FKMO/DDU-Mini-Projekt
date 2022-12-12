@@ -35,7 +35,6 @@ export default defineComponent({
         return {
             currentPath: window.location.pathname,
             checkingSession: false,
-            update: 0,
         };
     },
     components: {
@@ -44,11 +43,11 @@ export default defineComponent({
     },
     methods: {
         updateView() {
-            console.log("Loading page");
+            console.log("Loading page with path: " + this.currentPath);
             //Check login status
             var loggedIn = getLoggedIn();
             if (loggedIn) {
-                console.log('Logged in');
+                ///console.log('Logged in');
                 if (this.currentPath == '/login' || this.currentPath == '/register') {
                     window.history.pushState({}, "", "/");
                     this.currentPath = "/";
@@ -58,12 +57,11 @@ export default defineComponent({
                 document.title = newPage.title + ' | Title';
                 Component = newPage.page;
             } else if (this.currentPath != '/login' && this.currentPath != '/register') {
-                console.log("Not logged in");
+                ///console.log("Not logged in");
                 if (this.checkingSession == false) {
                     this.checkingSession = true;
                     IO.socket.emit('session', window.localStorage.getItem('session'));
-                    document.title = "Login" + ' | Title';
-                    Component = LoginPage;
+                    Component = null;
                 } else {
                     return;
                 }
@@ -76,18 +74,14 @@ export default defineComponent({
             //Update navbar
             Header.methods.updateNavbar();
         },
-    },
-    watch: {
-        currentPath() {
-            var path = this.currentPath;
-            console.log("Current path changed to: " + path);
+        changePage(newPage) {
+            window.history.pushState({}, "", location.origin + newPage);
+            this.currentPath = newPage;
+            this.updateView();
         }
     },
     mounted() {
         this.updateView();
-        window.addEventListener('hashchange', () => {
-            this.currentPath = window.location.pathname;
-        });
     },
 });
 </script>
