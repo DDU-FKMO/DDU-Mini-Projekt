@@ -1,11 +1,11 @@
 <template>
     <h2 v-if="!focus">Prøver</h2>
-    <div class="prøver" id="overview" v-if="!focus">
+    <div id="overview" v-if="!focus">
         <Prøve v-for="prøve in prøver" :klasse="prøve.klasse" :length="prøve.length" :date="prøve.date" :completed="prøve.completed" :id="prøve.id" :focus="false"></Prøve>
     </div>
     <h2 v-if="focus">Prøve</h2>
-    <div id="focus">
-        <Prøve v-if="focus" :klasse="focus.klasse" :length="focus.length" :date="focus.date" :completed="focus.completed" :id="focus.id" :focus="true"></Prøve>
+    <div v-if="focus" id="focus">
+        <Prøve :klasse="focus.klasse" :length="focus.length" :date="focus.date" :completed="focus.completed" :id="focus.id" :focus="true"></Prøve>
     </div>
 </template>
 
@@ -27,6 +27,11 @@ export default {
         setFocus(id) {
             console.log('Focus');
             this.focus = this.prøver.find((prøve) => {
+                return prøve.id === id;
+            });
+        },
+        getOpgave(id) {
+            return this.prøveData.find((prøve) => {
                 return prøve.id === id;
             });
         },
@@ -52,11 +57,18 @@ export default {
 </script>
 
 <style scoped>
-.prøver {
+#overview {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+}
+#focus {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 </style>

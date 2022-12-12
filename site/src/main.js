@@ -1,11 +1,12 @@
 import {io} from 'socket.io-client';
 
-var loggedIn = true;
+var loggedIn = false;
 var userInfo = {id: 0, name: 'Test', teacher: true};
 
 export function setLoggedIn(value, user) {
     loggedIn = value;
     userInfo = user;
+    console.log(user);
 }
 export function getLoggedIn() {
     return loggedIn;
