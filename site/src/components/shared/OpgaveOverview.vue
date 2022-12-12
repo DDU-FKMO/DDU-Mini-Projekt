@@ -1,3 +1,3 @@
 <template>
-    Opgaver:
+    <h2> Opgaver </h2>
 </template>
