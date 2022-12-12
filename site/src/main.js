@@ -38,7 +38,7 @@ export var IO = {
                 if (window.location.pathname != '/login' && window.location.pathname != '/register') {
                     App.methods.changePage("/login");
                 } else {
-                    App.methods.changePage("/");
+                    App.methods.changePage(window.location.pathname);
                 }
             }
         });
