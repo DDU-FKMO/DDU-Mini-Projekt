@@ -3,24 +3,49 @@
         <a href="/">
             <h1>Title</h1>
         </a>
-        <nav>
-            <a v-for:="item in Object.keys(navItems)" :href="'/' + navItems[item]">{{item}}</a>
+        <nav id="navbar">
         </nav>
     </header>
 </template>
 
 <script >
-    export default {
-        name: "Header",
-        data: () => {
-            return {
-                navItems: {"Login": "login", "Se opgaver": "opgaver", "Test": "test"}
-            }
-        },
-        mounted() {
-            
+import { getLoggedIn, getUserInfo } from '../main';
+
+export default {
+    name: "Header",
+    data: () => {
+        return {
+            navItems: {},
         }
+    },
+    methods: {
+        updateNavbar() {
+            console.log("Updating navbar");
+            if(getLoggedIn()) {
+                var userInfo = getUserInfo();
+                this.navItems = {"Se prøver": "opgaver", "Se Klasser": "klasser"};
+                if(userInfo.teacher == 1) {
+                    this.navItems["Opret Klasse"] = "opret_klasse";
+                    this.navItems["Opret Prøve"] = "opret_opgave";
+                } else {
+                    this.navItems["Tilsut Klasse"] = "join_klasse";
+                }
+            }
+            this.refreshFor();
+        },
+        refreshFor() {
+            let element = document.getElementById("navbar");
+            let html = "";
+            for(let item in this.navItems) {
+                html += `<a class="listItem" href="${this.navItems[item]}"> ${item} </a>`
+            }
+            element.innerHTML = html;
+        }
+    },
+    mounted() {
+        this.updateNavbar();
     }
+}
 </script>
 
 <style scoped>
@@ -46,31 +71,5 @@
         font-size: 1.5rem;
         text-decoration: none;
         color: #000000;
-    }
-    nav {
-        width: 70%;
-        height: 100%;
-        margin: 0 0 0 1rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        align-content: center;
-    }
-    nav a {
-        height: 100%;
-        color: var(--color-text);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        font-size: 1.25rem;
-        font-weight: 400;   
-        flex: auto;
-        transition: background-color 1s, font-weight 1s;
-    }
-    nav a:hover {
-        background-color: #00000075;
-        font-weight: 600;
     }
 </style>

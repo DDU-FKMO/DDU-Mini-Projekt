@@ -1,13 +1,18 @@
 import {io} from 'socket.io-client';
 var loggedIn = true;
 
-var userId;
+var userInfo = {id: 0, name: "Test", teacher: true};
 export function setLoggedIn(value, user) {
     loggedIn = value;
-    userId = user;
+    userInfo = user;
+    console.log("Updated user");
+    console.log(user);
 }
 export function getLoggedIn() {
     return loggedIn;
+}
+export function getUserInfo() {
+    return userInfo;
 }
 
 //Connection with server
@@ -22,15 +27,19 @@ export var IO = {
         IO.socket.on('error', IO.error);
         //Session
         IO.socket.on('session', (data) => {
-            setLoggedIn(data.approved, data.userId);
+            setLoggedIn(data.approved, data.user);
             if (data.approved) {
                 if (window.location.pathname == '/login' || window.location.pathname == '/register') {
-                    window.location.pathname = '/';
+                    window.history.pushState({}, "", "/");
+                    App.data().currentPath = "/";
                 }
+                App.methods.updateView();
             } else {
                 if (window.location.pathname != '/login' && window.location.pathname != '/register') {
-                    window.location.pathname = '/login';
+                    window.history.pushState({}, "", "/login");
+                    App.data().currentPath = "/login";
                 }
+                App.methods.updateView();
             }
         });
     },
@@ -52,4 +61,3 @@ import App from './App.vue';
 import './assets/main.css';
 
 createApp(App).mount('body');
-window.sessionStorage.setItem('Test', 'test');

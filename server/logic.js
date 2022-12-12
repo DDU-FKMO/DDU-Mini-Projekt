@@ -18,13 +18,12 @@ io.on('connection', (socket) => {
         //Check if correct with database
         database
             .checkSession(id, socket.request.connection.remoteAddress)
-            .then((userId) => {
-                ///console.log('UserId: ' + userId);
-                socket.emit('session', {approved: true, userId: userId});
+            .then((userInfo) => {
+                socket.emit('session', {approved: true, user: userInfo});
             })
             .catch((err) => {
                 console.log(err);
-                socket.emit('session', {approved: false, userId: null});
+                socket.emit('session', {approved: false, user: null});
             });
     });
 });
