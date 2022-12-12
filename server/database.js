@@ -21,6 +21,20 @@ function addUserInfo(email, username, password, teacher) {
     });
 }
 
+function addClass(className, inviteCode) {
+    let teachBool = teacher ? 1 : 0;
+    //console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
+    return new Promise((resolve, reject) => {
+        db.run('INSERT INTO class (className, inviteCode) VALUES (?, ?)', [className, inviteCode], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(this.lastID);
+            }
+        });
+    });
+}
+
 function addUserClass(id, inviteCode){
      return new Promise((resolve, reject) => {
         db.run('INSERT INTO dist (UserId, classId) VALUES (?, (SELECT id FROM class WHERE inviteCode = ?))', [id, inviteCode], function (err) {
@@ -72,17 +86,23 @@ function addResults(userId,testId,date, result){
 
 function getUserClass(userId){
     return new Promise((resolve, reject) => {
-        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err,row) {
+        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err,result, fields) {
             if (err) {
                 reject(err);
             } else {
-                let data = []
-                rows.forEach((row) => {
-                    data.
-                    classId = row.classId;
-                    className = row.className;
-                });
-                resolve(row.classId,row.className);
+                resolve(result)
+            }
+        });
+    });
+}
+
+function getUserList(classId){
+    return new Promise((resolve, reject) => {
+        db.all('select username from dist left join users on dist.userId = users.id where classId = ?', [classId], function (err,result, fields) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result)
             }
         });
     });
@@ -90,11 +110,9 @@ function getUserClass(userId){
 
 
 
-
-
 function checkUserInfo(email, password) {
     return new Promise((resolve, reject) => {
-        db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, row) => {
+        db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function (err,result, fields) {
             if (err) {
                 reject(err);
             } else {
@@ -146,6 +164,7 @@ module.exports = {
     addSession,
     checkSession,
     addUserClass,
+    addClass,
     addTest,
     addClassTest,
     addResults,
