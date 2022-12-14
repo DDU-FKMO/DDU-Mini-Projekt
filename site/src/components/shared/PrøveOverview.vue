@@ -1,5 +1,6 @@
 <template>
     <h2 v-if="!focus">Prøver</h2>
+    <button v-if="userInfo.teacher == 1" @click="opretOpgave">Opret prøve</button>
     <div id="overview" v-if="!focus">
         <Prøve v-for="prøve in prøver" :klasse="prøve.klasse" :length="prøve.length" :date="prøve.date" :completed="prøve.completed" :id="prøve.id" :focus="false"></Prøve>
     </div>
@@ -12,6 +13,7 @@
 <script>
 import Prøve from './Prøve.vue';
 import {IO, getUserInfo} from '../../main';
+import App from "../../App.vue";
 
 export default {
     name: 'PrøveOverview',
@@ -21,6 +23,7 @@ export default {
             prøveData: {},
             prøver: [],
             focus: null,
+            userInfo: {},
         };
     },
     methods: {
@@ -35,10 +38,14 @@ export default {
                 return prøve.id === id;
             });
         },
+        opretOpgave() {
+            App.methods.changePage("/opret_opgave");
+        }
     },
     mounted() {
         //Get prøver from database
         let user = getUserInfo();
+        this.userInfo = user;
         IO.socket.emit('getPrøver', {user: user.id, session: window.localStorage.getItem('session')});
         IO.socket.on('prøveInfo', (data) => {
             this.prøveData = data;

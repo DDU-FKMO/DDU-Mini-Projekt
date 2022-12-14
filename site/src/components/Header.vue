@@ -24,12 +24,6 @@ export default {
             if(getLoggedIn()) {
                 var userInfo = getUserInfo();
                 this.navItems = {"Se prøver": "opgaver", "Se Klasser": "klasser"};
-                if(userInfo.teacher == 1) {
-                    this.navItems["Opret Klasse"] = "opret_klasse";
-                    this.navItems["Opret Prøve"] = "opret_opgave";
-                } else {
-                    this.navItems["Tilsut Klasse"] = "join_klasse";
-                }
             }
             this.refreshFor();
         },
