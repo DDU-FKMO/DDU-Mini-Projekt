@@ -181,3 +181,26 @@ app.post('/opgave-post', function (req, res) {
         console.log(err);
     });
 });
+
+app.post('/new-class', function (req, res) {
+    var inviteCode = req.body.inviteCode;
+    var className = req.body.className;
+    var userId = req.body.userId;
+
+    //Check if correct with database
+    database
+        .addClass(className,inviteCode)
+        .then((id) => {
+            if (id) {
+                database.addUserClass(userId, inviteCode).then((succ) => {
+                    res.redirect('/klasser');
+                });
+            } else {
+                res.redirect('/opret_klasse#error');
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.redirect('/opret_klasse#error');
+        });
+});

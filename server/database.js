@@ -34,7 +34,6 @@ function getUserClass(userId) {
 }
 //Class...
 function addClass(className, inviteCode) {
-    let teachBool = teacher ? 1 : 0;
     //console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
     return new Promise((resolve, reject) => {
         db.run('INSERT INTO class (className, inviteCode) VALUES (?, ?)', [className, inviteCode], function (err) {
