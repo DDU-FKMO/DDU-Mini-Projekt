@@ -61,11 +61,16 @@ export default {
                     klasse: prøve.className,
                     length: prøve.questions.questions.length,
                     date: prøve.date,
-                    completed: false,
+                    completed: prøve.completed,
                     id: prøve.id,
                 });
             });
         });
+        //Error
+        if(window.location.hash == "#error") {
+            alert("Der skete en fejl, ved aflevering af prøven.");
+            window.location.hash = "";
+        }
     },
 };
 </script>
