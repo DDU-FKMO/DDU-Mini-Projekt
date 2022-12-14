@@ -1,12 +1,27 @@
 {
     "testName": "placeholder name",
-    "questionName": ["placeholder name"],
-    "inputText": ["placeholder text"],
-    "inputImage": ["placeholder filepath"],
-    "isMult": [true],
-    "responseOption1": ["placeholder1"],
-    "responseOption2": ["placeholder2"],
-    "responseOption3": ["placeholder3"],
-    "responseOption4": ["placeholder4"],
-    "correctOption": [1]
+    "questions": [
+        {
+            "questionName": "placeholder name",
+            "inputText": "placeholder text",
+            "inputImage": "placeholder filepath",
+            "isMult": true,
+            "responseOption1": "placeholder1",
+            "responseOption2": "placeholder2",
+            "responseOption3": "placeholder3",
+            "responseOption4": "placeholder4",
+            "correctOption": 1
+        },
+        {
+            "questionName": "placeholder name 2",
+            "inputText": "placeholder text 2",
+            "inputImage": "placeholder filepath",
+            "isMult": true,
+            "responseOption1": "placeholder1",
+            "responseOption2": "placeholder2",
+            "responseOption3": "placeholder3",
+            "responseOption4": "placeholder4",
+            "correctOption": 1
+        }
+    ]
 }

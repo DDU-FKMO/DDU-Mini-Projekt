@@ -2,15 +2,13 @@
     <a v-if="!focus" class="opgave" @click="click()">
         <span>{{ klasse }}</span>
         <span>{{ length }}</span>
-        <span>{{ date }}</span>
-        <span>{{ completed }}</span>
+        <span>{{ dateString }}</span>
     </a>
     <div v-if="focus && userInfo.teacher" class="focus">
         <h3>Lærer oversigt</h3>
         <span>{{ klasse }}</span>
         <span>{{ length }}</span>
-        <span>{{ date }}</span>
-        <span>{{ completed }}</span>
+        <span>{{ dateString }}</span>
         <div class="questions">
             <p v-for="opgave in jsonData.questions">{{ opgave }}</p>
         </div>
@@ -19,10 +17,13 @@
         <h3>Elev oversigt</h3>
         <span>{{ klasse }}</span>
         <span>{{ length }} spørgsmål</span>
-        <span>{{ date }}</span>
-        <input v-if="completed" class="completeBox" type="checkbox" checked disabled />
-        <input v-if="!completed" class="completeBox" type="checkbox" unchecked disabled />
-        <button v-if="available">Start</button>
+        <span>{{ dateString }}</span>
+        <div style="flex-direction: row;">
+            <p>Fuldført: </p>
+            <input v-if="completed" class="completeBox" type="checkbox" checked disabled />
+            <input v-if="!completed" class="completeBox" type="checkbox" unchecked disabled />
+        </div>
+        <button v-if="available" @click="start">Start</button>
         <button v-if="!available" disabled>Start</button>
     </div>
 </template>
@@ -38,6 +39,7 @@ export default {
             jsonData: {},
             userInfo: {},
             available: false,
+            dateString: "",
         };
     },
     methods: {
@@ -45,10 +47,27 @@ export default {
             console.log('clicked ' + this.id);
             this.$parent.setFocus(this.id);
         },
+        start() {
+            console.log('start ' + this.id);
+            this.$parent.startPrøve(this.id);
+        }
     },
     mounted() {
         this.jsonData = this.$parent.getOpgave(this.id);
         this.userInfo = getUserInfo();
+        this.dateString = new Date(this.date).toLocaleString();
+        if (Date.now() > this.date) {
+            this.available = true;
+        } else {
+            this.available = false;
+        }
+        setInterval(() => {
+            if (Date.now() > this.date) {
+                this.available = true;
+            } else {
+                this.available = false;
+            }
+        }, 1000);
     },
 };
 </script>
