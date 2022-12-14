@@ -38,6 +38,8 @@ export default {
         return {
             isMult: false,
             save: false,
+            questionName: '',
+            inputText: '',
             responseOption1: '',
             responseOption2: '',
             responseOption3: '',
@@ -48,12 +50,14 @@ export default {
     },
     mounted() {
         if (this.save) {
-            responseOption1 = document.getElementById('multbutton1').value
-            responseOption2 = document.getElementById('multbutton2').value
-            responseOption3 = document.getElementById('multbutton3').value
-            responseOption4 = document.getElementById('multbutton4').value
-            correctOption = document.getElementsByName('correct').value
-            save = false
+            this.questionName = document.getElementById('questionName').value
+            this.inputText = document.getElementById('descriptionText').value
+            this.responseOption1 = document.getElementById('multbutton1').value
+            this.responseOption2 = document.getElementById('multbutton2').value
+            this.responseOption3 = document.getElementById('multbutton3').value
+            this.responseOption4 = document.getElementById('multbutton4').value
+            this.correctOption = document.getElementsByName('correct').value
+            this.save = false
         }
     },
     methods: {
