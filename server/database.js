@@ -167,7 +167,11 @@ function checkUserInfo(email, password) {
             if (err) {
                 reject(err);
             } else {
-                resolve(row.id);
+                if(!result) {
+                    reject("Wrong email or password");
+                } else {
+                    resolve(result.id);
+                }
             }
         });
     });
