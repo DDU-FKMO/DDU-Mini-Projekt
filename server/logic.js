@@ -37,8 +37,50 @@ io.on('connection', (socket) => {
                     database
                         .getTests(data.user)
                         .then((prøver) => {
+                            database
+                                .getCompletedTests(data.user)
+                                .then((completedPrøver) => {
+                                    console.log(completedPrøver);
+                                    for (let i = 0; i < prøver.length; i++) {
+                                        if( completedPrøver.includes(prøver[i].id) ){
+                                            prøver[i].completed = true;
+                                        } else {
+                                            prøver[i].completed = false;
+                                        }
+                                    }
+                                    socket.emit('prøveInfo', prøver);
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    throw new Error('Session and user id does not match');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+
+    //Completed Prøve info
+    socket.on('getCompletedPrøver', (data) => {
+        console.log(data);
+        console.log("Checking completed tests for user: " + data.user);
+        //Check if session is correct with database
+        database
+            .checkSession(data.session, socket.request.connection.remoteAddress)
+            .then((userInfo) => {
+                if (userInfo.id == data.user) {
+                    console.log("Session and user id matches");
+                    database
+                        .getCompletedTests(data.user)
+                        .then((prøver) => {
                             console.log(prøver);
-                            socket.emit('prøveInfo', prøver);
+                            socket.emit('completedPrøveInfo', prøver);
                         })
                         .catch((err) => {
                             console.log(err);
@@ -99,6 +141,45 @@ app.post('/register-post', function (req, res) {
             console.error(err);
             res.redirect('/register#error');
         });
+});
+
+//Prøve post request
+app.post('/opgave-post', function (req, res) {
+    console.log(req.body);
+    //Check if session is correct with database
+    database
+    .checkSession(req.body.session, req.connection.remoteAddress)
+    .then((userInfo) => {
+        database
+            .getTests(userInfo.id)
+            .then((prøver) => {
+                let prøve = prøver.find((prøve) => {
+                    return prøve.id == req.body.prøveId;
+                });
+                if (prøve) {
+                    let svar = [];
+                    for (let i = 0; i < prøve.questions.length; i++) {
+                        svar.push(req.body["answer-" + prøve.questions[i].questionName]);
+                    }
+                    database.addResults(userInfo.id, prøve.id, Date.now(), svar).then((result) => {
+                        if(result == true) {
+                            res.redirect('/opgaver');
+                        } else {
+                            res.redirect('/opgaver#error');
+                        }
+                    });
+                } else {
+                    throw new Error('Prøve not found');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    })
+    .catch((err) => {
+        console.log("Completed tests");
+        console.log(err);
+    });
 });
 
 app.post('/new-class', function (req, res) {

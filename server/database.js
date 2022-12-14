@@ -117,7 +117,7 @@ function addClassTest(classId, testName) {
 }
 function addResults(userId, testId, date, result) {
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO results (userId,testId,date, result) VALUES (?, ?,?,?)', [userId, testId, date, result], function (err) {
+        db.run('INSERT INTO results (userId,testId,date, result) VALUES (?, ?,?,?)', [userId, testId, date, JSON.stringify(result)], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -183,6 +183,23 @@ function getTests(userId) {
     });
 }
 
+function getCompletedTests(userId) {
+    return new Promise((resolve, reject) => {
+        //Get all results by user
+        db.all('SELECT * FROM results WHERE userId = ?', [userId], function (err, results) {
+            let testData = [];
+            if(results) {
+                for(let result in results) {
+                    testData.push(results[result].testId);
+                }
+                resolve(testData);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
 //Login...
 function checkUserInfo(email, password) {
     return new Promise((resolve, reject) => {
@@ -219,6 +236,7 @@ function checkSession(sessionId, ip) {
                 if (row == undefined) {
                     reject('Session not found');
                 } else {
+                    console.log(row);
                     if (row.ip == ip) {
                         db.get('SELECT * FROM users WHERE id = ?', [row.userId], (err, row) => {
                             if (err || row == undefined) {
@@ -250,4 +268,5 @@ module.exports = {
     addResults,
     getTests,
     checkClassJoin,
+    getCompletedTests,
 };

@@ -56,13 +56,13 @@ export default {
         this.jsonData = this.$parent.getOpgave(this.id);
         this.userInfo = getUserInfo();
         this.dateString = new Date(this.date).toLocaleString();
-        if (Date.now() > this.date) {
+        if (Date.now() > this.date && !this.completed) {
             this.available = true;
         } else {
             this.available = false;
         }
         setInterval(() => {
-            if (Date.now() > this.date) {
+            if (Date.now() > this.date && !this.completed) {
                 this.available = true;
             } else {
                 this.available = false;
