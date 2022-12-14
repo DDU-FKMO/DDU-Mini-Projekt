@@ -1,3 +1,3 @@
 <template>
-    Tilsut ny klasse
-</template>
+    Tilslut ny klasse
+</template> 
