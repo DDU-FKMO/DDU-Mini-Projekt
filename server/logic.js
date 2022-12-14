@@ -123,3 +123,25 @@ app.post('/new-class', function (req, res) {
             res.redirect('/opret_klasse#error');
         });
 });
+
+app.post('/join-class', function (req, res) {
+    var inviteCode = req.body.inviteCode;
+    var userId = req.body.userId;
+
+    //Check if correct with database
+    database
+        .checkClassJoin(id,inviteCode)
+        .then((works) => {
+            if (works) {
+                database.addUserClass(userId, inviteCode).then((succ) => {
+                    res.redirect('/join_klasse#success');
+                });
+            } else {
+                res.redirect('/join_klasse#error');
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.redirect('/join_klasse#?',[err]);
+        });
+});

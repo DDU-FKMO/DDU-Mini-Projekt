@@ -17,6 +17,7 @@ import RegPage from './components/login/Register.vue';
 //Klasser
 import Klasser from "./components/shared/KlasseOverview.vue";
 import OpretKlasse from "./components/lærer/OpretKlasse.vue";
+import JoinKlasse from './components/elev/JoinKlasse.vue';
 //Opgaver
 import Opgaver from './components/shared/PrøveOverview.vue';
 import OpretOpgave from './components/lærer/OpretPrøve.vue';
@@ -30,7 +31,8 @@ const routes = {
     '/opgaver': {"page":  Opgaver, "title": "Prøver"},
     "/klasser": {"page": Klasser, "title": "Klasser"},
     "/opret_klasse": {"page": OpretKlasse, "title": "Opret Klasse"},
-    "/opret_opgave": {"page": OpretOpgave, "title": "Opret Prøve"}
+    "/opret_opgave": {"page": OpretOpgave, "title": "Opret Prøve"},
+    "/join_klasse": {"page": JoinKlasse, "title": "Join Klasse"}
 };
 
 var Component = LoginPage;
