@@ -211,7 +211,7 @@ app.post('/join-class', function (req, res) {
 
     //Check if correct with database
     database
-        .checkClassJoin(id,inviteCode)
+        .checkClassJoin(userId,inviteCode)
         .then((works) => {
             if (works) {
                 database.addUserClass(userId, inviteCode).then((succ) => {
@@ -223,6 +223,6 @@ app.post('/join-class', function (req, res) {
         })
         .catch((err) => {
             console.error(err);
-            res.redirect('/join_klasse#?',[err]);
+            res.redirect('/join_klasse#error');
         });
 });

@@ -61,21 +61,20 @@ function addUserClass(id, inviteCode) {
 
 function checkClassJoin(id, inviteCode) {
     return new Promise((resolve, reject) => {
-        db.all("db.all('select case when exists (SELECT inviteCode FROM class where inviteCode = ?) then 1 else 0 end as eks,case when exists (SELECT 1 from dist where userId = ? and classId = (SELECT id from class where inviteCode = ?)) then 1 else 0 end as joined", [inviteCode,id, inviteCode], function (err, result, fields) {
+        db.all("select case when exists (SELECT inviteCode FROM class where inviteCode = ?) then 1 else 0 end as eks,case when exists (SELECT 1 from dist where userId = ? and classId = (SELECT id from class where inviteCode = ?)) then 1 else 0 end as joined", [inviteCode,id, inviteCode], function (err, result, fields) {
             if (err) {
                 reject(err);
             } else {
-                if (result.eks == 0){
+                if (result[0].eks == 0){
                     reject("Der+findes+ingen+klasser+med+denne+kode");
                 }
-                else if (result.joined == 1){
+                else if (result[0].joined == 1){
                     reject("Allerede+en+del+af+denne+klasse");
                 }
                 else{
                     //addUserClass(id, inviteCode)
-                    resolve(true)
+                    resolve(true);
                 }
-                ;
             }
         });
     });

@@ -3,7 +3,7 @@
     <h2 style="color:red" id="error"></h2>
     <h2 style="color: red" id="fejl">{{error}}</h2>
     <h2 style="color: greenyellow" id="sucess">{{succ}}</h2>
-    <form name="klasse" action="" method="POST">
+    <form name="klasse" action="/join-class" method="POST">
         <fieldset>
             <input type="text" id="inviteCode">
         </fieldset>
@@ -36,7 +36,7 @@ export default {
         var hash = window.location.hash.replace('#', '');
         if (hash != '') {
             if (hash == 'error') {
-                document.getElementById("error").value = "Mislykkedes";
+                document.getElementById("error").innerHTML = "Mislykkedes";
             }
             else if (hash == 'success'){
                 this.succ = "Klasse tilsluttet";
