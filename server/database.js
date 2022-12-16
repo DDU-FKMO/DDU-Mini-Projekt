@@ -73,6 +73,7 @@ function checkClassJoin(id, inviteCode) {
                 }
                 else{
                     //addUserClass(id, inviteCode)
+                    console.log("Not joined and exists");
                     resolve(true);
                 }
             }

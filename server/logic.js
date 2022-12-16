@@ -208,21 +208,22 @@ app.post('/new-class', function (req, res) {
 app.post('/join-class', function (req, res) {
     var inviteCode = req.body.inviteCode;
     var userId = req.body.userId;
-
+    console.log(userId + ":"+ inviteCode)
     //Check if correct with database
     database
         .checkClassJoin(userId,inviteCode)
         .then((works) => {
-            if (works) {
+            
                 database.addUserClass(userId, inviteCode).then((succ) => {
+                    console.log("success");
                     res.redirect('/join_klasse#success');
                 });
-            } else {
-                res.redirect('/join_klasse#error');
-            }
+            
         })
         .catch((err) => {
-            console.error(err);
-            res.redirect('/join_klasse#error');
+            console.log(err);
+           url = '/join_klasse#' + err;
+           console.log(url)
+            res.redirect(url); //'/join_klasse#error'
         });
 });

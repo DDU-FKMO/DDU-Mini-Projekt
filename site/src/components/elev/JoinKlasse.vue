@@ -5,9 +5,9 @@
     <h2 style="color: greenyellow" id="sucess">{{succ}}</h2>
     <form name="klasse" action="/join-class" method="POST">
         <fieldset>
-            <input type="text" id="inviteCode">
+            <label for="inviteCode">Kode: </label>
+            <input type="text" name="inviteCode" id="inviteCode">
         </fieldset>
-
         <input type="hidden" name="userId" :value="userId">
         <fieldset><input type="submit" value="Tilslut klasse"></fieldset>
 
@@ -32,8 +32,8 @@ export default {
     mounted() {
         let userInfo = getUserInfo();
         this.userId = userInfo.id;
-        console.log(this.userId)
-        var hash = window.location.hash.replace('#', '');
+        console.log(this.userId);
+        /*var hash = window.location.hash.replace('#', '');
         if (hash != '') {
             if (hash == 'error') {
                 document.getElementById("error").innerHTML = "Mislykkedes";
@@ -45,7 +45,7 @@ export default {
                 has2 = hash.replaceAll("+"," ");
                 this.error = has2;
             }
-        }
+        }*/
     },
 }
 
