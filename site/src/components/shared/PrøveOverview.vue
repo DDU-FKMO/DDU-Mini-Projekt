@@ -90,6 +90,7 @@ export default {
             });
         });
         //Error
+        console.log('Hash: ' + window.location.hash);
         if (window.location.hash == '#error') {
             alert('Der skete en fejl, ved aflevering af prøven.');
             window.location.hash = '';
