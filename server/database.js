@@ -56,27 +56,29 @@ function addUserClass(id, inviteCode) {
         });
     });
 }
- 
- // 
+
+//
 
 function checkClassJoin(id, inviteCode) {
     return new Promise((resolve, reject) => {
-        db.all("select case when exists (SELECT inviteCode FROM class where inviteCode = ?) then 1 else 0 end as eks,case when exists (SELECT 1 from dist where userId = ? and classId = (SELECT id from class where inviteCode = ?)) then 1 else 0 end as joined", [inviteCode,id, inviteCode], function (err, result, fields) {
-            if (err) {
-                reject(err);
-            } else {
-                if (result[0].eks == 0){
-                    reject("Der+findes+ingen+klasser+med+denne+kode");
-                }
-                else if (result[0].joined == 1){
-                    reject("Allerede+en+del+af+denne+klasse");
-                }
-                else{
-                    //addUserClass(id, inviteCode)
-                    resolve(true);
+        db.all(
+            'select case when exists (SELECT inviteCode FROM class where inviteCode = ?) then 1 else 0 end as eks,case when exists (SELECT 1 from dist where userId = ? and classId = (SELECT id from class where inviteCode = ?)) then 1 else 0 end as joined',
+            [inviteCode, id, inviteCode],
+            function (err, result, fields) {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (result[0].eks == 0) {
+                        reject('Der+findes+ingen+klasser+med+denne+kode');
+                    } else if (result[0].joined == 1) {
+                        reject('Allerede+en+del+af+denne+klasse');
+                    } else {
+                        //addUserClass(id, inviteCode)
+                        resolve(true);
+                    }
                 }
             }
-        });
+        );
     });
 }
 function getUserList(classId) {
@@ -187,8 +189,8 @@ function getCompletedTests(userId) {
         //Get all results by user
         db.all('SELECT * FROM results WHERE userId = ?', [userId], function (err, results) {
             let testData = [];
-            if(results) {
-                for(let result in results) {
+            if (results) {
+                for (let result in results) {
                     testData.push(results[result].testId);
                 }
                 resolve(testData);
@@ -206,8 +208,8 @@ function checkUserInfo(email, password) {
             if (err) {
                 reject(err);
             } else {
-                if(!result) {
-                    reject("Wrong email or password");
+                if (!result) {
+                    reject('Wrong email or password');
                 } else {
                     resolve(result.id);
                 }
