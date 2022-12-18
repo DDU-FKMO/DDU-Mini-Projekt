@@ -30,12 +30,10 @@ export default {
     data: () => {
         return {
             userInfo: {},
-            title: '',
             sessionId: window.localStorage.getItem('session'),
-            currentQuestion: 0,
         };
     },
-    props: {id: null, prøveData: {}},
+    props: {prøveData: {}},
     mounted() {
         this.userInfo = getUserInfo();
         /*this.prøveData = this.$parent.getOpgave(this.id);

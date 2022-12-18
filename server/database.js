@@ -58,7 +58,6 @@ function addUserClass(id, inviteCode) {
 }
 
 //
-
 function checkClassJoin(id, inviteCode) {
     return new Promise((resolve, reject) => {
         db.all(
@@ -84,11 +83,15 @@ function checkClassJoin(id, inviteCode) {
 }
 function getUserList(classId) {
     return new Promise((resolve, reject) => {
-        db.all('select username from dist left join users on dist.userId = users.id where classId = ?', [classId], function (err, result, fields) {
+        db.all('select * from dist left join users on dist.userId = users.id where classId = ?', [classId], function (err, result, fields) {
             if (err) {
                 reject(err);
             } else {
-                resolve(result);
+                let userList = [];
+                for (let user in result) {
+                    userList.push({username: result[user].username, id: result[user].userId});
+                }
+                resolve(userList);
             }
         });
     });
@@ -125,6 +128,33 @@ function addResults(userId, testId, date, result) {
             } else {
                 resolve(true);
             }
+        });
+    });
+}
+function getResults(testId, classId) {
+    return new Promise((resolve, reject) => {
+        getUserList(classId).then((users) => {
+            //Get all results by user
+            db.all('SELECT * FROM results WHERE testId = ?', [testId], function (err, results) {
+                let testData = [];
+                if (results) {
+                    for (let result in results) {
+                        let user = users.find((user) => user.id == results[result].userId);
+                        if (user) {
+                            testData.push({userId: results[result].userId, username: user.username, date: results[result].date, result: JSON.parse(results[result].result)});
+                        }
+                    }
+                    //Add users from class with no results
+                    for (let user in users) {
+                        if (!testData.find((test) => test.userId == users[user].id)) {
+                            testData.push({userId: users[user].id, username: users[user].username, date: null, result: null});
+                        }
+                    }
+                    resolve(testData);
+                } else {
+                    reject(err);
+                }
+            });
         });
     });
 }
@@ -184,7 +214,6 @@ function getTests(userId) {
             });
     });
 }
-
 function getCompletedTests(userId) {
     return new Promise((resolve, reject) => {
         //Get all results by user
@@ -238,7 +267,6 @@ function checkSession(sessionId, ip) {
                 if (row == undefined) {
                     reject('Session not found');
                 } else {
-                    console.log(row);
                     if (row.ip == ip) {
                         db.get('SELECT * FROM users WHERE id = ?', [row.userId], (err, row) => {
                             if (err || row == undefined) {
@@ -268,6 +296,7 @@ module.exports = {
     getUserList,
     addTest,
     addResults,
+    getResults,
     getTests,
     checkClassJoin,
     getCompletedTests,

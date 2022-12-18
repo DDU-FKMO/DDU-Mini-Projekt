@@ -9,18 +9,20 @@
             <Prøve :testName="focus.questions.testName" :klasse="focus.className" :length="focus.questions.questions.length" :date="focus.date" :completed="focus.completed" :id="focus.id" :focus="true"></Prøve>
         </div>
     </div>
-    <PrøveVisning v-if="!overview" :id="focus.id" :prøveData="focus"></PrøveVisning>
+    <PrøveVisning v-if="!overview && userInfo.teacher != 1" :prøveData="focus"></PrøveVisning>
+    <ResultatVisning v-if="!overview && userInfo.teacher == 1" :prøveData="focus"></ResultatVisning>
 </template>
 
 <script>
 import Prøve from './Prøve.vue';
 import PrøveVisning from '../elev/PrøveVisning.vue';
+import ResultatVisning from '../lærer/ResultatVisning.vue';
 import {IO, getUserInfo} from '../../main';
 import App from '../../App.vue';
 
 export default {
     name: 'PrøveOverview',
-    components: {Prøve, PrøveVisning},
+    components: {Prøve, PrøveVisning, ResultatVisning},
     data: () => {
         return {
             overview: true,

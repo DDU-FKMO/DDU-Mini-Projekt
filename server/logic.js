@@ -14,10 +14,10 @@ io.on('connection', (socket) => {
 
     //Session check
     socket.on('session', (id) => {
-        console.log('Recieved session: [' + id + ']');
+        ///console.log('Recieved session: [' + id + '] from IP: [' + socket.handshake.address + ']');
         //Check if correct with database
         database
-            .checkSession(id, socket.request.connection.remoteAddress)
+            .checkSession(id, socket.handshake.address)
             .then((userInfo) => {
                 socket.emit('session', {approved: true, user: userInfo});
             })
@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
     socket.on('getPrøver', (data) => {
         //Check if session is correct with database
         database
-            .checkSession(data.session, socket.request.connection.remoteAddress)
+            .checkSession(data.session, socket.handshake.address)
             .then((userInfo) => {
                 if (userInfo.id == data.user) {
                     database
@@ -65,6 +65,33 @@ io.on('connection', (socket) => {
                 console.log(err);
             });
     });
+    //Result info
+    socket.on('getResults', (data) => {
+        //Check if session is correct with database
+        database
+            .checkSession(data.sessionId, socket.handshake.address)
+            .then((userInfo) => {
+                if (userInfo.id == data.userId) {
+                    if (userInfo.teacher == 1) {
+                        database
+                            .getResults(data.testId, data.classId)
+                            .then((prøver) => {
+                                socket.emit('resultInfo', prøver);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                    } else {
+                        throw new Error('User is not a teacher');
+                    }
+                } else {
+                    throw new Error('Session and user id does not match');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
 });
 
 //Login post request
@@ -77,7 +104,7 @@ app.post('/login-post', function (req, res) {
         .checkUserInfo(email, password)
         .then((id) => {
             if (id) {
-                database.addSession(id, req.connection.remoteAddress).then((sessionId) => {
+                database.addSession(id, req.socket.remoteAddress).then((sessionId) => {
                     res.redirect('/login#' + sessionId);
                 });
             } else {
@@ -102,7 +129,7 @@ app.post('/register-post', function (req, res) {
         .addUserInfo(email, username, password, type == 'teacher' ? true : false)
         .then((id) => {
             if (id) {
-                database.addSession(id, req.connection.remoteAddress).then((sessionId) => {
+                database.addSession(id, req.socket.remoteAddress).then((sessionId) => {
                     res.redirect('/login#' + sessionId);
                 });
             } else {
@@ -120,7 +147,7 @@ app.post('/opgave-post', function (req, res) {
     console.log(req.body);
     //Check if session is correct with database
     database
-        .checkSession(req.body.session, req.connection.remoteAddress)
+        .checkSession(req.body.session, req.socket.remoteAddress)
         .then((userInfo) => {
             database
                 .getTests(userInfo.id)
@@ -183,22 +210,20 @@ app.post('/new-class', function (req, res) {
 app.post('/join-class', function (req, res) {
     var inviteCode = req.body.inviteCode;
     var userId = req.body.userId;
-    console.log(userId + ":"+ inviteCode)
+    console.log(userId + ':' + inviteCode);
     //Check if correct with database
     database
         .checkClassJoin(userId, inviteCode)
         .then((works) => {
-            
-                database.addUserClass(userId, inviteCode).then((succ) => {
-                    console.log("success");
-                    res.redirect('/join_klasse#success');
-                });
-            
+            database.addUserClass(userId, inviteCode).then((succ) => {
+                console.log('success');
+                res.redirect('/join_klasse#success');
+            });
         })
         .catch((err) => {
             console.log(err);
-           url = '/join_klasse#' + err;
-           console.log(url)
+            url = '/join_klasse#' + err;
+            console.log(url);
             res.redirect(url); //'/join_klasse#error'
         });
 });

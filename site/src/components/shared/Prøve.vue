@@ -10,11 +10,13 @@
         <span>Klasse: {{ klasse }}</span>
         <span>Prøven består af {{ length }} spørgsmål</span>
         <span>Starter {{ dateString }}</span>
+        <button v-if="available" @click="start" enabled>Se resultater</button>
         <div class="questions">
             <h3>Spørgsmål</h3>
             <div v-for="question in prøveData.questions.questions" class="question">
                 <h3>{{ question.questionName }}</h3>
                 <h4>{{ question.inputText }}</h4>
+                <img v-if="question.inputImage" :src="question.inputImage" alt="opgave billede" />
                 <div v-if="question.isMult">
                     <h5>Svarmuligheder</h5>
                     <div class="answer" v-for="answer in question.responseOptions">
@@ -56,11 +58,9 @@ export default {
     },
     methods: {
         click() {
-            console.log('clicked ' + this.id);
             this.$parent.setFocus(this.id);
         },
         start() {
-            console.log('start ' + this.id);
             this.$parent.startPrøve(this.id);
         },
     },
