@@ -128,7 +128,7 @@ h2 {
 
 #focus {
     width: 100%;
-    height: 75vh;
+    min-height: 75vh;
     display: flex;
     flex-direction: row;
     justify-content: center;

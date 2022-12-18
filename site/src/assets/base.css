@@ -10,8 +10,9 @@
 
     --vt-c-indigo: #2c3e50;
 
-    --vt-c-divider-light-1: rgba(60, 60, 60, 0.574);
-    --vt-c-divider-light-2: rgba(57, 57, 57, 0.453);
+    --vt-c-divider-light-0: rgba(98, 107, 132, 0.745);
+    --vt-c-divider-light-1: rgba(60, 60, 60, 0.693);
+    --vt-c-divider-light-2: rgba(57, 57, 57, 0.606);
     --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
     --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
@@ -27,6 +28,7 @@
     --color-background-soft: var(--vt-c-white-soft);
 
     --color-border: var(--vt-c-divider-light-2);
+    --color-border-soft: var(--vt-c-divider-light-0);
     --color-border-hover: var(--vt-c-divider-light-1);
 
     --color-heading: var(--vt-c-text-light-1);

@@ -10,27 +10,29 @@
                 <h5>Korrekt svar</h5>
                 <div class="answer" v-for="answer in question.responseOptions">
                     <p>{{ answer }}</p>
-                    <input type="checkbox" onclick="return false;" :checked="question.responseOptions.indexOf(answer) == question.correctAnswer ? true : false" :style="'accent-color: green;'" />
+                    <input type="checkbox" :checked="question.responseOptions.indexOf(answer) == question.correctOption ? true : false" :style="'color: green;'" disabled />
                 </div>
             </div>
-            <div v-for="resultat in resultatData" class="resultatTab">
-                <h5>{{ resultat.username }}</h5>
-                <div v-if="question.isMult && resultat.result != null">
-                    <div class="answer" v-for="answer in question.responseOptions">
-                        <p>{{ answer }}</p>
-                        <input
-                            type="checkbox"
-                            onclick="return false;"
-                            :checked="resultat.result[prøveData.questions.questions.indexOf(question)] == question.responseOptions.indexOf(answer)"
-                            :style="'accent-color: ' + (question.responseOptions.indexOf(answer) == question.correctAnswer ? 'green' : 'red') + ';'"
-                        />
+            <div class="resultater">
+                <div v-for="resultat in resultatData" class="resultat">
+                    <h5>{{ resultat.username }}</h5>
+                    <div v-if="question.isMult && resultat.result != null">
+                        <div class="answer" v-for="answer in question.responseOptions">
+                            <p>{{ answer }}</p>
+                            <input
+                                type="checkbox"
+                                :checked="resultat.result[prøveData.questions.questions.indexOf(question)] == question.responseOptions.indexOf(answer)"
+                                :style="'color: ' + (question.responseOptions.indexOf(answer) == question.correctOption ? 'green' : 'red') + ';'"
+                                disabled
+                            />
+                        </div>
                     </div>
-                </div>
-                <div v-else-if="resultat.result != null">
-                    <input type="text" value="tekst svar..." disabled />
-                </div>
-                <div v-else>
-                    <p>Ikke besvaret</p>
+                    <div v-else-if="resultat.result != null">
+                        <p class="textSvar">{{ resultat.result[prøveData.questions.questions.indexOf(question)] }}</p>
+                    </div>
+                    <div v-else>
+                        <p>Ikke besvaret</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,10 +47,7 @@ export default {
     data: () => {
         return {
             userInfo: {},
-            resultatData: [
-                {userId: 2, username: 'Test user 2', date: '1671218421808.0', result: ['3', 'Besvarelse i tekst...']},
-                {userId: 1, username: 'Test user 1', date: null, result: null},
-            ],
+            resultatData: [],
         };
     },
     props: {prøveData: {}},
@@ -74,33 +73,11 @@ h2 {
     margin-bottom: 5rem;
 }
 
-button,
-[type='submit'],
-[type='button'] {
-    width: 12rem;
-    height: 3rem;
-    font-size: 1.5rem;
+h3 {
+    text-align: center;
+    font-size: 3rem;
     font-weight: 600;
-    border: 3px solid var(--color-border);
-    background-color: var(--color-background);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: font-size 0.2s, border 0.2s;
-    margin: 1rem;
-}
-button[disabled],
-[type='submit'][disabled],
-[type='button'][disabled] {
-    border: 3px solid rgba(0, 0, 0, 0.2);
-    color: rgba(0, 0, 0, 0.2);
-    cursor: not-allowed;
-    text-decoration: line-through;
-}
-button:hover,
-[type='submit']:hover,
-[type='button']:hover {
-    font-size: 1.6rem;
-    border: 3px solid var(--color-border-hover);
+    margin-bottom: 3rem;
 }
 
 .questions {
@@ -108,20 +85,15 @@ button:hover,
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-width: 30rem;
+    min-width: 75vw;
     margin: 2rem;
-    border: 3px solid var(--color-border);
+    border: 3px solid var(--color-border-hover);
     padding-bottom: 1rem;
 }
 .questions .question {
-    margin: 1rem 0 1rem 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-bottom: 3rem;
-    border-bottom: 3px solid var(--color-border);
+    padding-top: 3rem;
+    border-bottom: 0;
+    border-top: 3px solid var(--color-border);
 }
 .question img {
     max-width: 75%;
@@ -134,15 +106,6 @@ button:hover,
     align-items: center;
     width: 100%;
 }
-.answer input {
-    margin-left: 1rem;
-    accent-color: green;
-}
-.answer input:hover,
-.answer input:focus {
-    cursor: normal;
-    accent-color: green;
-}
 .question h5 {
     font-size: 1.5rem;
     font-weight: 600;
@@ -152,5 +115,53 @@ button:hover,
     font-size: 2.5rem;
     font-weight: 600;
     margin: 0;
+}
+
+.correct {
+    border-top: 3px solid var(--color-border-soft);
+    padding-top: 1rem;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.resultater {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 80vw;
+    overflow-x: scroll;
+    border-top: 3px solid var(--color-border-soft);
+    padding-top: 1rem;
+    margin: 0.5rem;
+}
+.resultater .resultat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    min-width: 12rem;
+    min-height: 10rem;
+    border: 3px solid var(--color-border-soft);
+    margin: 0.25rem;
+    padding: 0.5rem;
+}
+.resultat div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+.resultat .textSvar {
+    width: 100%;
+    min-height: 5rem;
+    word-wrap: normal;
+    word-break: normal;
 }
 </style>

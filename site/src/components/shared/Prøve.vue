@@ -21,11 +21,11 @@
                     <h5>Svarmuligheder</h5>
                     <div class="answer" v-for="answer in question.responseOptions">
                         <p>{{ answer }}</p>
-                        <input type="checkbox" onclick="return false;" :checked="question.responseOptions.indexOf(answer) == question.correctAnswer ? true : false" />
+                        <input type="checkbox" :checked="question.responseOptions.indexOf(answer) == question.correctOption ? true : false" disabled />
                     </div>
                 </div>
                 <div v-else>
-                    <input type="text" value="tekst svar..." disabled />
+                    <input type="textarea" value="tekst svar..." disabled />
                 </div>
             </div>
         </div>
@@ -67,14 +67,13 @@ export default {
     mounted() {
         this.prøveData = this.$parent.getOpgave(this.id);
         this.userInfo = getUserInfo();
-        console.log(this.userInfo);
         this.dateString = new Date(this.date).toLocaleString();
+        console.log(this.prøveData);
         if (Date.now() > this.date && !this.completed) {
             this.available = true;
         } else {
             this.available = false;
         }
-        console.log(this.available);
         setInterval(() => {
             if (Date.now() > this.date && !this.completed) {
                 this.available = true;
@@ -139,7 +138,7 @@ h2 {
     margin-bottom: 5rem;
 }
 button {
-    width: 10rem;
+    min-width: 15rem;
     height: 3rem;
     font-size: 1.5rem;
     font-weight: 600;
@@ -184,10 +183,6 @@ button[enabled]:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
-}
-.questions .answer input {
-    margin-left: 0.5rem;
-    accent-color: green;
 }
 .questions h5 {
     font-size: 1.5rem;

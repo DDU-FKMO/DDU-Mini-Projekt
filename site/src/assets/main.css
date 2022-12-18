@@ -55,3 +55,43 @@ nav a:hover {
 
 @media (max-width: 1024px) {
 }
+
+/* Checkbox */
+[type='checkbox'] {
+    appearance: none;
+    position: relative;
+    width: 1.5em;
+    height: 1.5em;
+    color: black;
+    border: 1px solid gray;
+    border-radius: 4px;
+    appearance: none;
+    outline: 0;
+    cursor: default;
+    transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+    margin-left: 0.5rem;
+    color: green;
+}
+[type='checkbox']::before {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 1px;
+    left: 5px;
+    width: 8px;
+    height: 14px;
+    border-style: solid;
+    border-color: white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+[type='checkbox']:checked {
+    border-color: currentColor;
+    background: currentColor;
+}
+[type='checkbox']:checked::before {
+    position: absolute;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+}

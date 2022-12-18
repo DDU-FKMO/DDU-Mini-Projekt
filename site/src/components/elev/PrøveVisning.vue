@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div v-else>
-                <input type="text" :name="'answer-' + question.questionName" />
+                <input type="textarea" :name="'answer-' + question.questionName" />
             </div>
         </div>
         <input type="submit" value="Aflever svar" />
@@ -38,7 +38,6 @@ export default {
         this.userInfo = getUserInfo();
         /*this.prøveData = this.$parent.getOpgave(this.id);
         title = this.prøveData.questions.testName;*/
-        console.log(this.prøveData);
     },
 };
 </script>
@@ -80,6 +79,11 @@ button:hover,
     border: 3px solid var(--color-border-hover);
 }
 
+[type='radio'] {
+    margin-left: 0.5rem;
+    accent-color: green;
+}
+
 .questions {
     display: flex;
     flex-direction: column;
@@ -110,15 +114,6 @@ button:hover,
     justify-content: center;
     align-items: center;
     width: 100%;
-}
-.answer input {
-    margin-left: 1rem;
-    accent-color: green;
-}
-.answer input:hover,
-.answer input:focus {
-    cursor: normal;
-    accent-color: green;
 }
 .question h5 {
     font-size: 1.5rem;
