@@ -1,8 +1,6 @@
 <template>
     <h1>Tilslut ny klasse</h1>
-    <h2 style="color: red" id="error"></h2>
-    <h2 style="color: red" id="fejl" :key="error">{{ error }}</h2>
-    <h2 style="color: greenyellow" id="sucess" :key="success">{{ success }}</h2>
+    <h2 :style="{color: Acolor}" id="fejl" :key="message">{{ message }}</h2>
     <form name="klasse" action="/join-class" method="POST">
         <fieldset>
             <label for="inviteCode">Kode: </label>
@@ -20,8 +18,8 @@ export default {
     data() {
         return {
             userId: 0,
-            error: '',
-            success: '',
+            message: '',
+            Acolor: "",
         };
     },
     methods: {},
@@ -32,15 +30,18 @@ export default {
         //Error
         console.log('Hash: ' + window.location.hash);
         if (window.location.hash == '#error') {
-            document.getElementById('error').innerHTML = 'Mislykkedes';
+            this.message = "fejl"
+            this.Acolor = "red"
             window.location.hash = '';
         } else if (window.location.hash == '#success') {
-            this.success = 'Klasse tilsluttet';
-            window.location.hash = '';
+            this.message = 'Klasse tilsluttet';
+            this.Acolor = "green";
         } else {
-            this.error = window.location.hash.replaceAll('+', ' ');
-            window.location.hash = '';
+            let temp = window.location.hash.replaceAll('+', ' ');
+            this.message = temp.replaceAll('#', '');
+            this.Acolor = "red";
         }
+        console.log(this.Acolor,this.message)
     },
 };
 </script>
