@@ -1,6 +1,11 @@
+//Redirect to https
+if (window.location.protocol != 'https:' && window.location.hostname != 'localhost' && window.location.hostname != '127.0.0.1') {
+    window.location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
 import {io} from 'socket.io-client';
 
-var loggedIn = false;
+var loggedIn = true;
 var userInfo = {id: 1, name: 'Test', teacher: 1};
 
 export function setLoggedIn(value, user) {
