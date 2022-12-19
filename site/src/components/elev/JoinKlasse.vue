@@ -26,7 +26,7 @@ export default {
     mounted() {
         let userInfo = getUserInfo();
         this.userId = userInfo.id;
-        console.log(this.userId);
+        //console.log(this.userId);
         //Error
         console.log('Hash: ' + window.location.hash);
         if (window.location.hash == '#error') {

@@ -125,7 +125,10 @@ app.post('/register-post', function (req, res) {
     var type = req.body.Type;
 
     //Check if correct with database
-    database
+    database.checkUserExists(email)
+    .then((eks => {
+        if (!eks){
+        database
         .addUserInfo(email, username, password, type == 'teacher' ? true : false)
         .then((id) => {
             if (id) {
@@ -140,6 +143,16 @@ app.post('/register-post', function (req, res) {
             console.error(err);
             res.redirect('/register#error');
         });
+        }
+        else{
+            res.redirect('/register#error');
+        }
+    }))
+    .catch((err) => {
+            console.error(err);
+            res.redirect('/register#error');
+        });
+    
 });
 
 //Prøve post request

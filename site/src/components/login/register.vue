@@ -35,10 +35,11 @@
 export default {
     mounted() {
         var hash = window.location.hash.replace('#', '');
+        console.log(hash);
         if (hash != '') {
             if (hash == 'error') {
                 setLoggedIn(false);
-                alert('Brugernavn eller adgangskode var forkert!');
+                alert('Denne email eksisterer allerede');
             }
         }
     },
