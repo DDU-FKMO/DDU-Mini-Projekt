@@ -140,7 +140,7 @@ function addTestFromName(className, questions, testName) {
             if (err) {
                 reject(err);
             } else {
-                addClassTestFromName(classId, testName); // burde nok tilføjes error handling til denne?
+                addClassTestFromName(className, testName); // burde nok tilføjes error handling til denne?
                 resolve(true);
             }
         });
