@@ -1,7 +1,7 @@
 @import './base.css';
 
 body {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     margin: 0;
     font-weight: normal;
@@ -14,14 +14,14 @@ body {
 
 main {
     width: 100%;
-    min-height: 80vh;
+    min-height: 85vh;
     padding: 0 3rem 0 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
-    background-color: var(--color-background);
+    background-color: var(--color-background-accent-soft);
 }
 
 nav {
@@ -44,13 +44,12 @@ nav a {
     font-size: 1.5rem;
     font-weight: 500;
     flex: auto;
-    transition: background-color 1s, font-weight 1s;
-    border: 2px solid var(--color-border);
+    border-radius: 1rem;
+    transition: background-color 500ms, font-weight 300ms;
 }
 nav a:hover {
-    background-color: #00000075;
-    font-weight: 600;
-    border: 2px solid var(--color-border-hover);
+    background-color: var(--color-background-accent);
+    font-weight: 700;
 }
 
 @media (max-width: 1024px) {

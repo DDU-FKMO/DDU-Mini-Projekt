@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <p>Footer Text</p>
+        <p></p>
         <p>©HCØ DDU 2022</p>
     </footer>
 </template>
@@ -8,7 +8,7 @@
 <style scoped>
     footer {
         width: 100%;
-        min-height: 5vh;
+        min-height: 5rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

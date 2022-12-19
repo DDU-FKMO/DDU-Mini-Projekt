@@ -74,7 +74,7 @@ export default defineComponent({
             }
             //Show page
             var newPage = routes[this.currentPath || '/'] || {"page": NotFound, "title": "404 - Not Found"};
-            document.title = newPage.title + ' | Title';
+            document.title = newPage.title + ' | prøveIndblik';
             Component = newPage.page;
             //Mount...
             if(oldApp) {
