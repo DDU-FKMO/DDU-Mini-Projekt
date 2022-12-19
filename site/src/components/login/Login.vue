@@ -1,19 +1,26 @@
 <template>
     <main>
         <form name="login" action="/login-post" method="POST">
-            <fieldset>
-                <label for="email">Email: </label>
-                <input type="email" id="email" name="Email" required />
-            </fieldset>
-            <fieldset>
-                <label for="password">Password: </label>
-                <input type="password" id="password" name="Password" required />
-            </fieldset>
+            <div class="tabs">
+                <a href="/login" id="login">
+                    Login
+                </a>
+                <a href="/register" id="register">
+                    Ny bruger
+                </a>
+            </div>
+            <div>
+                <fieldset>
+                    <label for="email">Email: </label>
+                    <input type="email" id="email" name="Email" required />
+                </fieldset>
+                <fieldset>
+                    <label for="password">Password: </label>
+                    <input type="password" id="password" name="Password" required />
+                </fieldset>
+            </div>
             <input type="submit" id="submit" value="Login" />
         </form>
-        <a href="/register">
-            <button href="/register" onclick="location.href = '/register';">Register new user</button>
-        </a>
     </main>
 </template>
 
@@ -44,44 +51,89 @@ main {
 form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     align-content: center;
-    width: 25%;
-    padding: 2%;
-    border: #000000 5px solid;
+    width: 50%;
+    min-width: 25rem;
+    min-height: 35rem;
+    padding: 2rem;
+    padding-top: 8rem;
+    border: var(--color-border) 5px solid;
+    background-color: var(--color-background-accent);
+    border-radius: 5rem;
 }
 form fieldset {
-    width: 100%;
+    width: 20rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 1.25rem;
+    border: none;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.25rem;
 }
-form #submit {
-    width: 75%;
-    border-radius: 0;
+form fieldset input {
     width: 10rem;
-    height: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--color-text);
+    border: var(--color-border) 2px solid;
+    background-color: var(--color-background-soft);
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+form fieldset input:hover {
+    border-color: var(--color-border-hover);
+}
+form #submit, button {
+    border-radius: 2rem;
+    width: 15rem;
+    height: 4rem;
     background-color: var(--color-background-mute);
     border-color: var(--color-border);
-    transition: border-color 0.5s;
+    transition: border-color 300ms background-color 400ms;
 }
-form #submit:hover {
-    background-color: var(--color-background-soft);
+form #submit:hover, button:hover {
     border-color: var(--color-border-hover);
+    background-color: var(--color-border);
 }
 
-button {
-    border-radius: 0;
-    width: 10rem;
-    height: 1.5rem;
-    background-color: var(--color-background-mute);
-    border-color: var(--color-border);
-    transition: border-color 0.5s;
+.tabs {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    height: 5rem;
+    top: 0;
+    border-top-left-radius: 4.5rem;
+    border-top-right-radius: 4.5rem;
+    border: var(--color-border) 5px solid;
+    overflow: hidden;
 }
-button:hover {
-    background-color: var(--color-background-soft);
-    border-color: var(--color-border-hover);
+.tabs a {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: color 300ms;
+    background-color: var(--color-accent-1);
+}
+#login {
+    background-color: var(--color-border);
+}
+.tabs a:hover, #login:hover {
+    background-color: var(--color-border-hover);
 }
 </style>
