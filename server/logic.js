@@ -265,3 +265,20 @@ app.post('/join-class', function (req, res) {
             res.redirect(url); //'/join_klasse#error'
         });
 });
+
+app.post('/submit-test', function (req, res) {
+    var className = req.body.className;
+    var questions = req.body.questions;
+    var testName = req.body.testName;
+    //Check if correct with database
+    database
+        .testClassExist(className, questions, testName)
+        .then((works) => {
+            res.redirect('/submit-test#success');
+        })
+        .catch((err) => {
+            console.log(err);
+            url = '/submit-test#error';
+            res.redirect(url);
+        });
+});
