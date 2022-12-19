@@ -32,7 +32,7 @@ export default {
         if (window.location.hash == '#error') {
             this.message = "fejl"
             this.Acolor = "red"
-            window.location.hash = '';
+            //window.location.hash = '';
         } else if (window.location.hash == '#success') {
             this.message = 'Klasse tilsluttet';
             this.Acolor = "green";
@@ -41,7 +41,7 @@ export default {
             this.message = temp.replaceAll('#', '');
             this.Acolor = "red";
         }
-        console.log(this.Acolor,this.message)
+        //console.log(this.Acolor,this.message)
     },
 };
 </script>

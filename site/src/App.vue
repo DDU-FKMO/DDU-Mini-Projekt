@@ -86,8 +86,9 @@ export default defineComponent({
             Header.methods.updateNavbar();
         },
         changePage(newPage) {
+            //console.log("App.vue: " + window.location.hash)
             console.log("Changing page to " + newPage);
-            window.history.pushState({}, "", location.origin + newPage);
+            window.history.pushState({}, "", location.origin + newPage+ window.location.hash);
             this.currentPath = newPage;
             this.updateView();
         }
