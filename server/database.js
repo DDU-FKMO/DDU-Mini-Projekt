@@ -136,7 +136,7 @@ function addTest(classId, questions, testName) {
 
 function addTestFromName(className, questions, testName) {
     return new Promise((resolve, reject) => {
-        db.all('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
+        db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -149,7 +149,7 @@ function addTestFromName(className, questions, testName) {
 
 function addClassTestFromName(className, testName) {
     return new Promise((resolve, reject) => {
-        db.all('INSERT INTO assignments (classId, testId) VALUES ((SELECT id FROM class WHERE className = ?), (SELECT id FROM tests WHERE name = ?))', [className, testName], function (err) {
+        db.run('INSERT INTO assignments (classId, testId) VALUES ((SELECT id FROM class WHERE className = ?), (SELECT id FROM tests WHERE name = ?))', [className, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
