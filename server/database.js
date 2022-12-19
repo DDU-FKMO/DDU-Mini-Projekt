@@ -133,6 +133,51 @@ function addTest(classId, questions, testName) {
         });
     });
 }
+
+function addTestFromName(className, questions, testName) {
+    return new Promise((resolve, reject) => {
+        db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                addClassTestFromName(classId, testName); // burde nok tilføjes error handling til denne?
+                resolve(true);
+            }
+        });
+    });
+}
+
+function addClassTestFromName(className, testName) {
+    return new Promise((resolve, reject) => {
+        db.run('INSERT INTO assignments (classId, testId) VALUES ((SELECT id FROM class WHERE className = ?), (SELECT id FROM tests WHERE name = ?))', [className, testName], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+function testClassExist(className, questions, testName) {
+    return new Promise((resolve, reject) => {
+        db.run('select case when exists (SELECT className from class where className = ?) then 1 else 0 end as eks', [className], function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                if (result[0].eks == 1){
+                addTestFromName(className, questions, testName); // burde nok tilføjes error handling til denne?
+                resolve(true);
+                }
+                else{
+                    reject("eksisterer ikke");
+                }
+            }
+        });
+    });
+}
+
+
 function addClassTest(classId, testName) {
     return new Promise((resolve, reject) => {
         db.run('INSERT INTO assignments (classId, testId) VALUES (?, (SELECT id FROM tests WHERE name = ?))', [classId, testName], function (err) {
@@ -325,4 +370,6 @@ module.exports = {
     checkClassJoin,
     getCompletedTests,
     checkUserExists,
+    addTestFromName,
+    testClassExist,
 };
