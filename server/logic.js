@@ -274,11 +274,11 @@ app.post('/submit-test', function (req, res) {
     database
         .testClassExist(className, questions, testName)
         .then((works) => {
-            res.redirect('/submit-test#success');
+            res.redirect("/opret_opgave#success");
         })
         .catch((err) => {
             console.log(err);
-            url = '/submit-test#error';
+            url = "/opret_opgave#error";
             res.redirect(url);
         });
 });
