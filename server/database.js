@@ -23,7 +23,7 @@ function addUserInfo(email, username, password, teacher) {
 }
 function getUserClass(userId) {
     return new Promise((resolve, reject) => {
-        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err, result, fields) {
+        db.all('SELECT classId,className,inviteCode from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err, result, fields) {
             if (err) {
                 reject(err);
             } else {
@@ -81,6 +81,30 @@ function checkClassJoin(id, inviteCode) {
         );
     });
 }
+
+function checkUserExists(email) {
+    return new Promise((resolve, reject) => {
+        db.all(
+            'select case when exists (SELECT email from users where email = ?) then 1 else 0 end as eks',
+            [email],
+            function (err, result, fields) {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (result[0].eks == 1) {
+                        resolve(true);
+                    } else {
+                        
+                        console.log('exists');
+                        resolve(false);
+                    }
+                }
+            }
+        );
+    });
+}
+
+
 function getUserList(classId) {
     return new Promise((resolve, reject) => {
         db.all('select * from dist left join users on dist.userId = users.id where classId = ?', [classId], function (err, result, fields) {
@@ -300,4 +324,5 @@ module.exports = {
     getTests,
     checkClassJoin,
     getCompletedTests,
+    checkUserExists,
 };

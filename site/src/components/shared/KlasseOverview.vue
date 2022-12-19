@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {getUserInfo} from '../../main';
+import {getUserInfo,IO} from '../../main';
 import App from '../../App.vue';
 import Klasse from './Klasse.vue';
 
@@ -18,9 +18,7 @@ export default {
     data: () => {
         return {
             klasser: [
-                {className: '3a2', inviteCode: '123'},
-                {className: '3c', inviteCode: 'test'},
-                {className: '3h', inviteCode: '3924ef'},
+                {className: '', inviteCode: ''},
             ],
             userInfo: {},
         };
@@ -35,6 +33,15 @@ export default {
     },
     mounted() {
         this.userInfo = getUserInfo();
+        //get klasser
+        
+        let user = getUserInfo();
+        this.userInfo = user;
+        IO.socket.emit('getKlasser', { user: user.id, session: window.localStorage.getItem('session') });
+        IO.socket.on('klasseInfo', (data) => {
+            this.klasser = data;
+            console.log(this.klasser);
+        });
     },
 };
 </script>
