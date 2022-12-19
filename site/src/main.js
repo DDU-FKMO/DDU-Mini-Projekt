@@ -11,7 +11,6 @@ var userInfo = {id: 1, name: 'Test', teacher: 1};
 export function setLoggedIn(value, user) {
     loggedIn = value;
     userInfo = user;
-    console.log(user);
 }
 export function getLoggedIn() {
     return loggedIn;
