@@ -119,7 +119,7 @@ h2 {
 }
 #prøver {
     width: 100%;
-    height: 80vh;
+    min-height: 50vh;
     display: flex;
     flex-direction: row;
     justify-content: center;

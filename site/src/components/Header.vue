@@ -1,7 +1,7 @@
 <template>
     <header>
         <a href="/">
-            <img/>
+            <img src="/logo-square.png" alt="logo" />
             <h1>prøve<b>Indblik</b></h1>
         </a>
         <nav id="navbar"></nav>
@@ -44,29 +44,34 @@ export default {
 
 <style scoped>
 header {
-    height: 5rem;
+    height: 10vh;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     align-content: center;
-    padding: 0 0 0 3rem;
-    background-color: var(--color-background-soft   );
+    background-color: var(--color-background-soft);
 }
 b {
     font-weight: 800;
 }
 header a {
     width: 20%;
+    min-width: 20rem;
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     align-content: center;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     text-decoration: none;
     color: #000000;
+}
+header a img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
 }
 </style>
