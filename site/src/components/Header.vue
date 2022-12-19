@@ -1,7 +1,8 @@
 <template>
     <header>
         <a href="/">
-            <h1>Title</h1>
+            <img/>
+            <h1>prøve<b>Indblik</b></h1>
         </a>
         <nav id="navbar"></nav>
     </header>
@@ -43,7 +44,7 @@ export default {
 
 <style scoped>
 header {
-    height: 5vh;
+    height: 5rem;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -51,8 +52,10 @@ header {
     align-items: center;
     align-content: center;
     padding: 0 0 0 3rem;
-    background-color: var(--color-background-soft);
-    border: 3px solid var(--color-border);
+    background-color: var(--color-background-soft   );
+}
+b {
+    font-weight: 800;
 }
 header a {
     width: 20%;

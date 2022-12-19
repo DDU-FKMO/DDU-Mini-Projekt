@@ -1,7 +1,7 @@
 @import './base.css';
 
 body {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     margin: 0;
     font-weight: normal;
@@ -14,14 +14,14 @@ body {
 
 main {
     width: 100%;
-    min-height: 80vh;
+    min-height: 85vh;
     padding: 0 3rem 0 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
-    background-color: var(--color-background);
+    background-color: var(--color-background-accent-soft);
 }
 
 nav {
@@ -44,13 +44,12 @@ nav a {
     font-size: 1.5rem;
     font-weight: 500;
     flex: auto;
-    transition: background-color 1s, font-weight 1s;
-    border: 2px solid var(--color-border);
+    border-radius: 1rem;
+    transition: background-color 500ms, font-weight 300ms;
 }
 nav a:hover {
-    background-color: #00000075;
-    font-weight: 600;
-    border: 2px solid var(--color-border-hover);
+    background-color: var(--color-background-accent);
+    font-weight: 700;
 }
 
 @media (max-width: 1024px) {
@@ -94,4 +93,28 @@ nav a:hover {
     position: absolute;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     opacity: 1;
+}
+
+/* Button */
+[type='button'], [type="submit"], button {
+    border-radius: 2rem;
+    width: 15rem;
+    height: 4rem;
+    background-color: var(--color-background-accent);
+    border: var(--color-border) 3px solid;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    transition: border-color 300ms, background-color 400ms, font-size 300ms;
+}
+[type='button']:hover:enabled, [type="submit"]:hover:enabled, button:hover:enabled {
+    border-color: var(--color-border-hover);
+    background-color: var(--color-border);
+    font-size: 1.6rem;
+}
+[type='button']:disabled, [type="submit"]:disabled, button:disabled {
+    border-color: var(--color-border-soft);
+    cursor: not-allowed;
+    text-decoration: line-through;
 }
