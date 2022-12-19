@@ -5,7 +5,7 @@ if (window.location.protocol != 'https:' && window.location.hostname != 'localho
 
 import {io} from 'socket.io-client';
 
-var loggedIn = false;
+var loggedIn = true;
 var userInfo = {id: 1, name: 'Test', teacher: 1};
 
 export function setLoggedIn(value, user) {

@@ -50,35 +50,6 @@ h2 {
     margin-bottom: 5rem;
 }
 
-button,
-[type='submit'],
-[type='button'] {
-    width: 12rem;
-    height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    border: 3px solid var(--color-border);
-    background-color: var(--color-background);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: font-size 0.2s, border 0.2s;
-    margin: 1rem;
-}
-button[disabled],
-[type='submit'][disabled],
-[type='button'][disabled] {
-    border: 3px solid rgba(0, 0, 0, 0.2);
-    color: rgba(0, 0, 0, 0.2);
-    cursor: not-allowed;
-    text-decoration: line-through;
-}
-button:hover,
-[type='submit']:hover,
-[type='button']:hover {
-    font-size: 1.6rem;
-    border: 3px solid var(--color-border-hover);
-}
-
 [type='radio'] {
     margin-left: 0.5rem;
     accent-color: green;
@@ -91,8 +62,9 @@ button:hover,
     align-items: center;
     min-width: 30rem;
     margin: 2rem;
-    border: 3px solid var(--color-border);
+    border: 3px solid var(--color-border-hover);
     padding-bottom: 1rem;
+    border-radius: 3rem;
 }
 .questions .question {
     margin: 1rem 0 1rem 0;

@@ -87,18 +87,6 @@ form fieldset input {
 form fieldset input:hover {
     border-color: var(--color-border-hover);
 }
-form #submit, button {
-    border-radius: 2rem;
-    width: 15rem;
-    height: 4rem;
-    background-color: var(--color-background-mute);
-    border-color: var(--color-border);
-    transition: border-color 300ms background-color 400ms;
-}
-form #submit:hover, button:hover {
-    border-color: var(--color-border-hover);
-    background-color: var(--color-border);
-}
 
 .tabs {
     position: absolute;

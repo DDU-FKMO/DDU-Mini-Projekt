@@ -89,6 +89,7 @@ h3 {
     margin: 2rem;
     border: 3px solid var(--color-border-hover);
     padding-bottom: 1rem;
+    border-radius: 3rem;
 }
 .questions .question {
     padding-top: 3rem;

@@ -88,7 +88,7 @@ export default {
 <style scoped>
 .opgave {
     width: 20rem;
-    height: 10rem;
+    height: 15rem;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -98,6 +98,7 @@ export default {
     margin: 2rem;
     text-decoration: none;
     color: var(--color-text);
+    border-radius: 3rem;
 }
 .opgave h3 {
     font-size: 1.75rem;
@@ -105,7 +106,8 @@ export default {
     margin: 0;
 }
 .opgave:hover {
-    border: 3px solid var(--color-border-hover);
+    border-color: var(--color-border-hover);
+    background-color: var(--color-background-accent);
     cursor: pointer;
 }
 .opgave span {
@@ -137,27 +139,6 @@ h2 {
     font-weight: 600;
     margin-bottom: 5rem;
 }
-button {
-    min-width: 15rem;
-    height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    border: 3px solid var(--color-border);
-    background-color: var(--color-background);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: font-size 0.2s, border 0.2s;
-}
-button[disabled] {
-    border: 3px solid rgba(0, 0, 0, 0.2);
-    color: rgba(0, 0, 0, 0.2);
-    cursor: not-allowed;
-    text-decoration: line-through;
-}
-button[enabled]:hover {
-    font-size: 1.6rem;
-    border: 3px solid var(--color-border-hover);
-}
 
 .questions {
     display: flex;
@@ -167,7 +148,8 @@ button[enabled]:hover {
     width: 35rem;
     height: 100%;
     margin: 2rem;
-    border: 3px solid var(--color-border);
+    border: 3px solid var(--color-border-hover);
+    border-radius: 3rem;
 }
 .questions div {
     margin: 1rem 0 1rem 0;

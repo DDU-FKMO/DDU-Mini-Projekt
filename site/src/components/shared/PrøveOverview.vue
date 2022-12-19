@@ -42,7 +42,7 @@ export default {
                                 inputImage: '/images/test.png',
                                 isMult: true,
                                 responseOptions: ['test answer 1', 'test answer 2', 'test answer 3', 'test answer 4'],
-                                correctAnswer: 1,
+                                correctOption: 1,
                             },
                             {
                                 questionName: 'test question 2',
@@ -50,7 +50,7 @@ export default {
                                 inputImage: '/images/test.png',
                                 isMult: false,
                                 responseOptions: [],
-                                correctAnswer: null,
+                                correctOption: null,
                             },
                         ],
                     },
@@ -132,27 +132,5 @@ h2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-button {
-    width: 15rem;
-    height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    border: 3px solid var(--color-border);
-    background-color: var(--color-background);
-    color: var(--color-text);
-    cursor: pointer;
-    transition: font-size 0.2s, border 0.2s;
-}
-button[disabled] {
-    border: 3px solid rgba(0, 0, 0, 0.2);
-    color: rgba(0, 0, 0, 0.2);
-    cursor: not-allowed;
-    text-decoration: line-through;
-}
-button:hover {
-    font-size: 1.6rem;
-    border: 3px solid var(--color-border-hover);
 }
 </style>
