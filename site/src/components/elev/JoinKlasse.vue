@@ -1,6 +1,6 @@
 <template>
     <h1>Tilslut ny klasse</h1>
-    <h2 :style="{color: Acolor}" id="fejl" :key="message">{{ message }}</h2>
+    <h4 :style="{color: Acolor}" id="fejl" :key="message">{{ message }}</h4>
     <form name="klasse" action="/join-class" method="POST">
         <fieldset>
             <label for="inviteCode">Kode: </label>
