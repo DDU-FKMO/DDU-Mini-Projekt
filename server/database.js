@@ -23,7 +23,7 @@ function addUserInfo(email, username, password, teacher) {
 }
 function getUserClass(userId) {
     return new Promise((resolve, reject) => {
-        db.all('SELECT classId,className from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err, result, fields) {
+        db.all('SELECT classId,className,inviteCode from dist LEFT join class on dist.classId = class.id WHERE userId = ?', [userId], function (err, result, fields) {
             if (err) {
                 reject(err);
             } else {

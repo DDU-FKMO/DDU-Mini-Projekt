@@ -65,6 +65,31 @@ io.on('connection', (socket) => {
                 console.log(err);
             });
     });
+
+    // get classes:
+    socket.on('getKlasser', (data) => {
+        //Check if session is correct with database
+        database
+            .checkSession(data.session, socket.handshake.address)
+            .then((userInfo) => {
+                if (userInfo.id == data.user) {
+                    database
+                        .getUserClass(data.user)
+                        .then((klasser) => {
+                            socket.emit('klasseInfo', klasser);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    throw new Error('Session and user id does not match');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+
     //Result info
     socket.on('getResults', (data) => {
         //Check if session is correct with database
