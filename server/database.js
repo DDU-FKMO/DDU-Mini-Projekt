@@ -136,7 +136,7 @@ function addTest(classId, questions, testName) {
 
 function addTestFromName(className, questions, testName) {
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
+        db.all('INSERT INTO tests (questions, testName) VALUES (?, ?)', [questions, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -149,7 +149,7 @@ function addTestFromName(className, questions, testName) {
 
 function addClassTestFromName(className, testName) {
     return new Promise((resolve, reject) => {
-        db.run('INSERT INTO assignments (classId, testId) VALUES ((SELECT id FROM class WHERE className = ?), (SELECT id FROM tests WHERE name = ?))', [className, testName], function (err) {
+        db.all('INSERT INTO assignments (classId, testId) VALUES ((SELECT id FROM class WHERE className = ?), (SELECT id FROM tests WHERE name = ?))', [className, testName], function (err) {
             if (err) {
                 reject(err);
             } else {
@@ -161,7 +161,7 @@ function addClassTestFromName(className, testName) {
 
 function testClassExist(className, questions, testName) {
     return new Promise((resolve, reject) => {
-        db.run('select case when exists (SELECT className from class where className = ?) then 1 else 0 end as eks', [className], function (err) {
+        db.all('select case when exists (SELECT className from class where className = ?) then 1 else 0 end as eks', [className], function (err,result) {
             if (err) {
                 reject(err);
             } else {
