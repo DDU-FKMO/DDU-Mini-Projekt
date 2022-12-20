@@ -18,7 +18,7 @@ export default {
     data: () => {
         return {
             klasser: [
-                {className: '', inviteCode: ''},
+                
             ],
             userInfo: {},
         };
