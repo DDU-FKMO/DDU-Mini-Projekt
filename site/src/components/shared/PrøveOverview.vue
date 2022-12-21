@@ -104,7 +104,7 @@ export default {
 <style scoped>
 h2 {
     text-align: center;
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 600;
     margin-bottom: 5rem;
 }

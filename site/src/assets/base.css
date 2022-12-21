@@ -1,28 +1,41 @@
 :root {
-    --color-accent-0: #ffc8c8;
-    --color-accent-1: #ff9f9f;
-    --color-accent-2: #ff6b6b;
-    --color-accent-3: #ff4d4d;
+    --color-green-900:#10424a;
+    --color-green-700:#258790;
+    --color-green-500:#26b6bb;
+    --color-green-300:#90ced1;
+    --color-green-100:#d6f5f0;
+
+    --color-red-900:#472d2d;
+    --color-red-700:#ff4d4d;
+    --color-red-500:#ff6b6b;
+    --color-red-300:#ff9f9f;
+    --color-red-100: #ffc8c8;
+
+    --color-blue-900:#09326b;
+    --color-blue-700:#074b94;
+    --color-blue-500:#0763a5;
+    --color-blue-300:#6392c5;
+    --color-blue-100:#d6ebfa;
+
+    --color-yellow-500:#f89847;
+    --color-white-100:#f8f8f8;
+    --color-white-200:#f1f1f1;
+
+    --color-background-soft: var(--color-white-100:);
+    --section-gap: 160px;
 }
 
-
-/* semantic color variables for this project */
 :root {
-    --color-background: #ffffff;
-    --color-background-accent: var(--color-accent-1);
-    --color-background-accent-soft: var(--color-accent-0);
-    --color-background-soft: #f8f8f8;
+    --color-background-accent: var(--color-red-300);
+    --color-background-accent-soft: var(--color-red-100);
 
-    --color-border: var(--color-accent-2);
-    --color-border-soft: var(--color-accent-1);
-    --color-border-hover: var(--color-accent-3);
+    --color-border: var(--color-red-500);
+    --color-border-soft: var(--color-red-300);
+    --color-border-hover: var(--color-red-700);
 
-    --color-heading: var(--color-accent-3);
-    --color-text: #472d2d;
-    --color-text-accent: var(--color-accent-2);
-    --color-text-white: #f8f8f8;
-
-    --section-gap: 160px;
+    --color-heading: var(--color-red-700);
+    --color-text:var(--color-red-900);
+    --color-text-accent: var(--color-red-500);
 }
 
 *,
@@ -36,8 +49,6 @@
 
 body {
     min-height: 100vh;
-    color: var(--color-text);
-    background: var(--color-background);
     line-height: 1.6;
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;

@@ -1,5 +1,5 @@
 <template>
-    <h1>Klasser:</h1>
+    <h1>Klasser</h1>
     <button v-if="userInfo.teacher == 1" @click="opretKlasse">Opret klasse</button>
     <button v-if="userInfo.teacher == 0" @click="joinKlasse">Tilslut klasse</button>
     <div class="klasser">
@@ -53,5 +53,13 @@ export default {
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 600;
+    margin-bottom: 5rem;
 }
 </style>

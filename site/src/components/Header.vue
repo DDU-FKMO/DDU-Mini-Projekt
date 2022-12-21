@@ -23,7 +23,7 @@ export default {
             console.log('Updating navbar');
             if (getLoggedIn()) {
                 var userInfo = getUserInfo();
-                this.navItems = {'Se prøver': 'opgaver', 'Se Klasser': 'klasser'};
+                this.navItems = {'Se prøver': 'opgaver', 'Se klasser': 'klasser'};
             }
             this.refreshFor();
         },

@@ -1,18 +1,14 @@
 <template>
-    <h1>Opret klasse</h1>
-    <h2 style="color:red" id="error"></h2>
     <form name="klasse" action="/new-class" method="POST">
-        <fieldset><label for="className">KlasseNavn: </label>
+        <fieldset><label for="className">Klassenavn: </label>
         <input type="text" name="className" id="className">
         </fieldset>
-        <fieldset><label for="inviteCode">Kode: </label>
+        <fieldset ><label for="inviteCode">Kode: </label>
         <input type="text" name="inviteCode" id="inviteCode"> <button id="tilfældig" type="button" @click="randCode">Tilfældig
-            kode til klassen</button></fieldset>
-        <input type="hidden" name="userId" :value="userId">
+            kode</button></fieldset>
+        <input type="hidden" name="userId" :value="userId" style="border:0;">
         <fieldset><input type="submit" value="Opret klasse"></fieldset>
-        
     </form>
-     
 </template> 
 
 <script>
@@ -49,7 +45,10 @@ export default {
         }
     },
 }
-
-
-
 </script>
+
+<style scoped>
+fieldset{
+    border:0;
+}
+</style>
