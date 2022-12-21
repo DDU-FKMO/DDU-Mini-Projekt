@@ -1,5 +1,4 @@
 <template>
-    <div class="content" id="green">
     <h2>{{ prøveData.questions.testName }}</h2>
     <form class="questions" name="prøve" action="/opgave-post" method="POST">
         <input type="hidden" name="prøveId" :value="prøveData.id" />
@@ -21,7 +20,6 @@
         </div>
         <input type="submit" value="Aflever svar" />
     </form>
-    </div>
 </template>
 
 <script>

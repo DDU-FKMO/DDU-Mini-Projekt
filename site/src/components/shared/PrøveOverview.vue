@@ -1,18 +1,18 @@
 <template>
     <div class="content" id="green">
-    <div v-if="overview" id="overview">
-        <h2 v-if="!focus">Prøver</h2>
-        <button v-if="userInfo.teacher == 1 && !focus" @click="opretOpgave">Opret prøve</button>
-        <div id="prøver" v-if="!focus">
-            <Prøve v-for="prøve in prøveData" :testName="prøve.questions.testName" :klasse="prøve.className" :length="prøve.questions.questions.length" :date="prøve.date" :completed="prøve.completed" :id="prøve.id" :focus="false"></Prøve>
+        <div v-if="overview" id="overview">
+            <h2 v-if="!focus">Prøver</h2>
+            <button v-if="userInfo.teacher == 1 && !focus" @click="opretOpgave">Opret prøve</button>
+            <div id="prøver" v-if="!focus">
+                <Prøve v-for="prøve in prøveData" :testName="prøve.questions.testName" :klasse="prøve.className" :length="prøve.questions.questions.length" :date="prøve.date" :completed="prøve.completed" :id="prøve.id" :focus="false"></Prøve>
+            </div>
+            <div v-if="focus" id="focus">
+                <Prøve :testName="focus.questions.testName" :klasse="focus.className" :length="focus.questions.questions.length" :date="focus.date" :completed="focus.completed" :id="focus.id" :focus="true"></Prøve>
+            </div>
         </div>
-        <div v-if="focus" id="focus">
-            <Prøve :testName="focus.questions.testName" :klasse="focus.className" :length="focus.questions.questions.length" :date="focus.date" :completed="focus.completed" :id="focus.id" :focus="true"></Prøve>
-        </div>
+        <PrøveVisning v-if="!overview && userInfo.teacher != 1" :prøveData="focus"></PrøveVisning>
+        <ResultatVisning v-if="!overview && userInfo.teacher == 1" :prøveData="focus"></ResultatVisning>
     </div>
-    </div>
-    <PrøveVisning v-if="!overview && userInfo.teacher != 1" :prøveData="focus"></PrøveVisning>
-    <ResultatVisning v-if="!overview && userInfo.teacher == 1" :prøveData="focus"></ResultatVisning>
 </template>
 
 <script>
