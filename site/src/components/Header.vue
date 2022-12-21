@@ -1,7 +1,7 @@
 <template>
     <header>
         <a href="/">
-            <img style="vertical-align:middle;" src="/logo-highres.png" alt="logo"/>
+            <img style="vertical-align: middle" src="/logo-highres.png" alt="logo" />
             <h1>prøve<b>Indblik</b></h1>
         </a>
         <nav id="navbar"></nav>
@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         updateNavbar() {
-            console.log('Updating navbar');
+            ///console.log('Updating navbar');
             if (getLoggedIn()) {
                 var userInfo = getUserInfo();
                 this.navItems = {'Se prøver': 'opgaver', 'Se klasser': 'klasser'};

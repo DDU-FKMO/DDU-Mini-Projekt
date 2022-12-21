@@ -1,16 +1,16 @@
 <template>
     <div class="content" id="red">
-    <h1>Klasser</h1>
-    <button v-if="userInfo.teacher == 1" @click="opretKlasse">Opret klasse</button>
-    <button v-if="userInfo.teacher == 0" @click="joinKlasse">Tilslut klasse</button>
-    <div class="klasser">
-        <Klasse v-for="klasse in klasser" :klasseNavn="klasse.className" :inviteCode="klasse.inviteCode"></Klasse>
-    </div>
+        <h1>Klasser</h1>
+        <button v-if="userInfo.teacher == 1" @click="opretKlasse">Opret klasse</button>
+        <button v-if="userInfo.teacher == 0" @click="joinKlasse">Tilslut klasse</button>
+        <div class="klasser">
+            <Klasse v-for="klasse in klasser" :klasseNavn="klasse.className" :inviteCode="klasse.inviteCode"></Klasse>
+        </div>
     </div>
 </template>
 
 <script>
-import {getUserInfo,IO} from '../../main';
+import {getUserInfo, IO} from '../../main';
 import App from '../../App.vue';
 import Klasse from './Klasse.vue';
 
@@ -19,9 +19,7 @@ export default {
     components: {Klasse},
     data: () => {
         return {
-            klasser: [
-                
-            ],
+            klasser: [],
             userInfo: {},
         };
     },
@@ -36,13 +34,13 @@ export default {
     mounted() {
         this.userInfo = getUserInfo();
         //get klasser
-        
+
         let user = getUserInfo();
         this.userInfo = user;
-        IO.socket.emit('getKlasser', { user: user.id, session: window.localStorage.getItem('session') });
+        IO.socket.emit('getKlasser', {user: user.id, session: window.localStorage.getItem('session')});
         IO.socket.on('klasseInfo', (data) => {
             this.klasser = data;
-            console.log(this.klasser);
+            ///console.log(this.klasser);
         });
     },
 };
@@ -56,7 +54,6 @@ export default {
     justify-content: center;
     flex-wrap: wrap;
 }
-
 
 h1 {
     text-align: center;

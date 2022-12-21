@@ -1,16 +1,16 @@
 <template>
     <div class="content" id="red">
-    <form name="klasse" action="/new-class" method="POST">
-        <fieldset>
-            <label for="className">Klassenavn: </label>
-            <input type="text" name="className" id="className" />
-        </fieldset>
-        <fieldset><label for="inviteCode">Kode: </label> <input type="text" name="inviteCode" id="inviteCode" /> <button id="tilfældig" type="button" @click="randCode">Tilfældig kode</button></fieldset>
-        <input type="hidden" name="userId" :value="userId" style="border: 0" />
-        <fieldset><input type="submit" value="Opret klasse" /></fieldset>
-    </form>
+        <form name="klasse" action="/new-class" method="POST">
+            <fieldset>
+                <label for="className">Klassenavn: </label>
+                <input type="text" name="className" id="className" />
+            </fieldset>
+            <fieldset><label for="inviteCode">Kode: </label> <input type="text" name="inviteCode" id="inviteCode" /> <button id="tilfældig" type="button" @click="randCode">Tilfældig kode</button></fieldset>
+            <input type="hidden" name="userId" :value="userId" style="border: 0" />
+            <fieldset><input type="submit" value="Opret klasse" /></fieldset>
+        </form>
     </div>
-</template> 
+</template>
 
 <script>
 import {getUserInfo} from '../../main';
@@ -35,7 +35,7 @@ export default {
     mounted() {
         let userInfo = getUserInfo();
         this.userId = userInfo.id;
-        console.log(this.userId);
+        ///console.log(this.userId);
         var hash = window.location.hash.replace('#', '');
         if (hash != '') {
             if (hash == 'error') {

@@ -5,8 +5,8 @@ if (window.location.protocol != 'https:' && window.location.hostname != 'localho
 
 import {io} from 'socket.io-client';
 
-var loggedIn = true;
-var userInfo = {id: 1, name: 'Test', teacher: 1};
+var loggedIn = false;
+var userInfo = {id: 0, name: '', teacher: 0};
 
 export function setLoggedIn(value, user) {
     loggedIn = value;
@@ -31,7 +31,7 @@ export var IO = {
         IO.socket.on('error', IO.error);
         //Session
         IO.socket.on('session', (data) => {
-            console.log('recieved session info...');
+            ///console.log('recieved session info...');
             setLoggedIn(data.approved, data.user);
             if (data.approved) {
                 if (window.location.pathname == '/login' || window.location.pathname == '/register') {
@@ -50,7 +50,7 @@ export var IO = {
     },
 
     onConnected: function () {
-        console.log('Succesfully connected to server (' + IO.socket.id + ')');
+        ///console.log('Succesfully connected to server (' + IO.socket.id + ')');
         //IO.socket.emit('test');
     },
 

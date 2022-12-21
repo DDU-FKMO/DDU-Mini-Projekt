@@ -3,12 +3,8 @@
         <div class="content" id="blue">
             <form name="register" class="form-group" action="/register-post" method="POST">
                 <div class="tabs">
-                    <a href="/login" id="login">
-                        Login
-                    </a>
-                    <a href="/register" id="register">
-                        Ny bruger
-                    </a>
+                    <a href="/login" id="login"> Login </a>
+                    <a href="/register" id="register"> Ny bruger </a>
                 </div>
                 <div>
                     <fieldset>
@@ -41,7 +37,7 @@
 export default {
     mounted() {
         var hash = window.location.hash.replace('#', '');
-        console.log(hash);
+        ///console.log(hash);
         if (hash != '') {
             if (hash == 'error') {
                 setLoggedIn(false);
@@ -82,7 +78,8 @@ form fieldset {
     font-weight: 700;
     font-size: 1.25rem;
 }
-form fieldset input, form fieldset select {
+form fieldset input,
+form fieldset select {
     width: 10rem;
     display: flex;
     flex-direction: row;
@@ -93,10 +90,12 @@ form fieldset input, form fieldset select {
     font-weight: 500;
     font-size: 0.8rem;
 }
-form fieldset input:hover, form fieldset select:hover  {
+form fieldset input:hover,
+form fieldset select:hover {
     border-color: var(--color-border-hover);
 }
-form #submit, button {
+form #submit,
+button {
     border-radius: 2rem;
     width: 15rem;
     height: 4rem;
@@ -104,7 +103,8 @@ form #submit, button {
     border-color: var(--color-border);
     transition: border-color 300ms background-color 400ms;
 }
-form #submit:hover, button:hover {
+form #submit:hover,
+button:hover {
     border-color: var(--color-border-hover);
     background-color: var(--color-border);
 }
@@ -142,7 +142,8 @@ form #submit:hover, button:hover {
 #register {
     background-color: var(--color-border);
 }
-.tabs a:hover, #register:hover {
+.tabs a:hover,
+#register:hover {
     background-color: var(--color-border-hover);
 }
 </style>

@@ -68,7 +68,7 @@ export default {
         this.prøveData = this.$parent.getOpgave(this.id);
         this.userInfo = getUserInfo();
         this.dateString = new Date(this.date).toLocaleString();
-        console.log(this.prøveData);
+        ///console.log(this.prøveData);
         if (Date.now() > this.date && !this.completed) {
             this.available = true;
         } else {

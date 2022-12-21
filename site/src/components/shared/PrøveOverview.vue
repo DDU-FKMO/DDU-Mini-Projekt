@@ -65,7 +65,7 @@ export default {
     methods: {
         setFocus(id) {
             this.focus = this.getOpgave(id);
-            console.log(this.focus);
+            ///console.log(this.focus);
         },
         getOpgave(id) {
             return this.prøveData.find((prøve) => {
@@ -82,19 +82,19 @@ export default {
     },
     mounted() {
         //Get prøver from database
-        console.log(this.prøveData);
+        ///console.log(this.prøveData);
         let user = getUserInfo();
         this.userInfo = user;
         IO.socket.emit('getPrøver', {user: user.id, session: window.localStorage.getItem('session')});
         IO.socket.on('prøveInfo', (data) => {
             this.prøveData = data;
-            console.log(this.prøveData);
+            ///console.log(this.prøveData);
             this.prøveData.forEach((prøve) => {
                 prøve.questions = JSON.parse(prøve.questions);
             });
         });
         //Error
-        console.log('Hash: ' + window.location.hash);
+        ///console.log('Hash: ' + window.location.hash);
         if (window.location.hash == '#error') {
             alert('Der skete en fejl, ved aflevering af prøven.');
             window.location.hash = '';

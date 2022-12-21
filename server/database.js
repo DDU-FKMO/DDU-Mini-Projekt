@@ -10,7 +10,7 @@ let db = new sqlite3.Database('./users.db', (err) => {
 //User...
 function addUserInfo(email, username, password, teacher) {
     let teachBool = teacher ? 1 : 0;
-    //console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
+    ///console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
     return new Promise((resolve, reject) => {
         db.run('INSERT INTO users (username, email, password, teacher) VALUES (?, ?, ?, ?)', [username, email, password, teachBool], function (err) {
             if (err) {
@@ -34,7 +34,6 @@ function getUserClass(userId) {
 }
 //Class...
 function addClass(className, inviteCode) {
-    //console.log('Adding user: [Email:' + email + ' Username:' + username + ' Password:' + password + ' Teacher:' + teacher + ']');
     return new Promise((resolve, reject) => {
         db.run('INSERT INTO class (className, inviteCode) VALUES (?, ?)', [className, inviteCode], function (err) {
             if (err) {
@@ -73,7 +72,7 @@ function checkClassJoin(id, inviteCode) {
                         reject('Allerede+en+del+af+denne+klasse');
                     } else {
                         //addUserClass(id, inviteCode)
-                        console.log('Not joined and exists');
+                        ///console.log('Not joined and exists');
                         resolve(true);
                     }
                 }
@@ -84,26 +83,20 @@ function checkClassJoin(id, inviteCode) {
 
 function checkUserExists(email) {
     return new Promise((resolve, reject) => {
-        db.all(
-            'select case when exists (SELECT email from users where email = ?) then 1 else 0 end as eks',
-            [email],
-            function (err, result, fields) {
-                if (err) {
-                    reject(err);
+        db.all('select case when exists (SELECT email from users where email = ?) then 1 else 0 end as eks', [email], function (err, result, fields) {
+            if (err) {
+                reject(err);
+            } else {
+                if (result[0].eks == 1) {
+                    resolve(true);
                 } else {
-                    if (result[0].eks == 1) {
-                        resolve(true);
-                    } else {
-                        
-                        console.log('exists');
-                        resolve(false);
-                    }
+                    ///console.log('exists');
+                    resolve(false);
                 }
             }
-        );
+        });
     });
 }
-
 
 function getUserList(classId) {
     return new Promise((resolve, reject) => {
@@ -161,22 +154,20 @@ function addClassTestFromName(className, testName) {
 
 function testClassExist(className, questions, testName) {
     return new Promise((resolve, reject) => {
-        db.all('select case when exists (SELECT className from class where className = ?) then 1 else 0 end as eks', [className], function (err,result) {
+        db.all('select case when exists (SELECT className from class where className = ?) then 1 else 0 end as eks', [className], function (err, result) {
             if (err) {
                 reject(err);
             } else {
-                if (result[0].eks == 1){
-                addTestFromName(className, questions, testName); // burde nok tilføjes error handling til denne?
-                resolve(true);
-                }
-                else{
-                    reject("eksisterer ikke");
+                if (result[0].eks == 1) {
+                    addTestFromName(className, questions, testName); // burde nok tilføjes error handling til denne?
+                    resolve(true);
+                } else {
+                    reject('eksisterer ikke');
                 }
             }
         });
     });
 }
-
 
 function addClassTest(classId, testName) {
     return new Promise((resolve, reject) => {

@@ -52,11 +52,11 @@ export default {
     },
     props: {prøveData: {}},
     mounted() {
-        console.log('Resultatvisning');
+        ///console.log('Resultatvisning');
         this.userInfo = getUserInfo();
-        console.log(this.userInfo);
-        console.log(this.prøveData);
-        console.log(this.resultatData);
+        ///console.log(this.userInfo);
+        ///console.log(this.prøveData);
+        ///console.log(this.resultatData);
         IO.socket.emit('getResults', {testId: this.prøveData.id, userId: this.userInfo.id, classId: this.prøveData.classId, sessionId: window.localStorage.getItem('session')});
         IO.socket.on('resultInfo', (data) => {
             this.resultatData = data;

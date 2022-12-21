@@ -9,7 +9,7 @@ const database = require('./database.js');
 
 //Connection with client
 io.on('connection', (socket) => {
-    //console.log('A user (' + socket.id + ') connected to server');
+    ///console.log('A user (' + socket.id + ') connected to server');
     socket.emit('connected', {message: 'You are connected'});
 
     //Session check
@@ -40,7 +40,6 @@ io.on('connection', (socket) => {
                             database
                                 .getCompletedTests(data.user)
                                 .then((completedPrøver) => {
-                                    console.log(completedPrøver);
                                     for (let i = 0; i < prøver.length; i++) {
                                         if (completedPrøver.includes(prøver[i].id)) {
                                             prøver[i].completed = true;
@@ -150,16 +149,25 @@ app.post('/register-post', function (req, res) {
     var type = req.body.Type;
 
     //Check if correct with database
-    database.checkUserExists(email)
-    .then((eks => {
-        if (!eks){
-        database
-        .addUserInfo(email, username, password, type == 'teacher' ? true : false)
-        .then((id) => {
-            if (id) {
-                database.addSession(id, req.socket.remoteAddress).then((sessionId) => {
-                    res.redirect('/login#' + sessionId);
-                });
+    database
+        .checkUserExists(email)
+        .then((eks) => {
+            if (!eks) {
+                database
+                    .addUserInfo(email, username, password, type == 'teacher' ? true : false)
+                    .then((id) => {
+                        if (id) {
+                            database.addSession(id, req.socket.remoteAddress).then((sessionId) => {
+                                res.redirect('/login#' + sessionId);
+                            });
+                        } else {
+                            res.redirect('/register#error');
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        res.redirect('/register#error');
+                    });
             } else {
                 res.redirect('/register#error');
             }
@@ -168,21 +176,11 @@ app.post('/register-post', function (req, res) {
             console.error(err);
             res.redirect('/register#error');
         });
-        }
-        else{
-            res.redirect('/register#error');
-        }
-    }))
-    .catch((err) => {
-            console.error(err);
-            res.redirect('/register#error');
-        });
-    
 });
 
 //Prøve post request
 app.post('/opgave-post', function (req, res) {
-    console.log(req.body);
+    ///console.log(req.body);
     //Check if session is correct with database
     database
         .checkSession(req.body.session, req.socket.remoteAddress)
@@ -199,8 +197,8 @@ app.post('/opgave-post', function (req, res) {
                         for (let i = 0; i < data.questions.length; i++) {
                             svar.push(req.body['answer-' + data.questions[i].questionName]);
                         }
-                        console.log('Svar:');
-                        console.log(svar);
+                        ///console.log('Svar:');
+                        ///console.log(svar);
                         database.addResults(userInfo.id, prøve.id, Date.now(), svar).then((result) => {
                             if (result == true) {
                                 res.redirect('/opgaver');
@@ -217,7 +215,6 @@ app.post('/opgave-post', function (req, res) {
                 });
         })
         .catch((err) => {
-            console.log('Completed tests');
             console.log(err);
         });
 });
@@ -248,20 +245,20 @@ app.post('/new-class', function (req, res) {
 app.post('/join-class', function (req, res) {
     var inviteCode = req.body.inviteCode;
     var userId = req.body.userId;
-    console.log(userId + ':' + inviteCode);
+    ///console.log(userId + ':' + inviteCode);
     //Check if correct with database
     database
         .checkClassJoin(userId, inviteCode)
         .then((works) => {
             database.addUserClass(userId, inviteCode).then((succ) => {
-                console.log('success');
+                ///console.log('success');
                 res.redirect('/join_klasse#success');
             });
         })
         .catch((err) => {
             console.log(err);
             url = '/join_klasse#' + err;
-            console.log(url);
+            ///console.log(url);
             res.redirect(url); //'/join_klasse#error'
         });
 });
@@ -274,11 +271,11 @@ app.post('/submit-test', function (req, res) {
     database
         .testClassExist(className, questions, testName)
         .then((works) => {
-            res.redirect("/opret_opgave#success");
+            res.redirect('/opret_opgave#success');
         })
         .catch((err) => {
             console.log(err);
-            url = "/opret_opgave#error";
+            url = '/opret_opgave#error';
             res.redirect(url);
         });
 });
