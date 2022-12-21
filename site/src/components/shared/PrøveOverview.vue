@@ -1,4 +1,5 @@
 <template>
+    <div class="content" id="green">
     <div v-if="overview" id="overview">
         <h2 v-if="!focus">Prøver</h2>
         <button v-if="userInfo.teacher == 1 && !focus" @click="opretOpgave">Opret prøve</button>
@@ -8,6 +9,7 @@
         <div v-if="focus" id="focus">
             <Prøve :testName="focus.questions.testName" :klasse="focus.className" :length="focus.questions.questions.length" :date="focus.date" :completed="focus.completed" :id="focus.id" :focus="true"></Prøve>
         </div>
+    </div>
     </div>
     <PrøveVisning v-if="!overview && userInfo.teacher != 1" :prøveData="focus"></PrøveVisning>
     <ResultatVisning v-if="!overview && userInfo.teacher == 1" :prøveData="focus"></ResultatVisning>

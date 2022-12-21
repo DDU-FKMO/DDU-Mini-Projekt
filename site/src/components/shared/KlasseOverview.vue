@@ -1,9 +1,11 @@
 <template>
+    <div class="content" id="red">
     <h1>Klasser</h1>
     <button v-if="userInfo.teacher == 1" @click="opretKlasse">Opret klasse</button>
     <button v-if="userInfo.teacher == 0" @click="joinKlasse">Tilslut klasse</button>
     <div class="klasser">
         <Klasse v-for="klasse in klasser" :klasseNavn="klasse.className" :inviteCode="klasse.inviteCode"></Klasse>
+    </div>
     </div>
 </template>
 

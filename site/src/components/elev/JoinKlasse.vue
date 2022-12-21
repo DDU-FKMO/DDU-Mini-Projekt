@@ -1,4 +1,5 @@
 <template>
+<div class="content" id="red">
     <h1>Tilslut ny klasse</h1>
     <h4 :style="{color: Acolor}" id="fejl" :key="message">{{ message }}</h4>
     <form name="klasse" action="/join-class" method="POST">
@@ -9,6 +10,7 @@
         <input type="hidden" name="userId" :value="userId" />
         <fieldset><input type="submit" value="Tilslut klasse" /></fieldset>
     </form>
+</div>
 </template>
 
 <script>

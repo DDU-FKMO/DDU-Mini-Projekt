@@ -1,7 +1,7 @@
 <template>
     <header>
         <a href="/">
-            <img src="/logo-square.png" alt="logo" />
+            <img style="vertical-align:middle;" src="/logo-highres.png" alt="logo"/>
             <h1>prøve<b>Indblik</b></h1>
         </a>
         <nav id="navbar"></nav>
@@ -51,7 +51,6 @@ header {
     justify-content: space-between;
     align-items: center;
     align-content: center;
-    background-color: var(--color-background-soft);
 }
 b {
     font-weight: 800;

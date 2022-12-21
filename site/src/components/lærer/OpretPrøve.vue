@@ -1,4 +1,5 @@
 <template>
+    <div class="content" id="green">
     <div class="overview">
         <form name="prøve" action="/submit-test" method="POST">
             <input type="text" name="testName" placeholder="Navn på prøve...">
@@ -43,6 +44,7 @@
             </form>
             <button @click="saveTest">Save</button>
         </div>
+    </div>
     </div>
 </template>
 

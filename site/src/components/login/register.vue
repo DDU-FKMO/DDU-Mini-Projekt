@@ -1,5 +1,6 @@
 <template>
     <main>
+        <div class="content" id="blue">
             <form name="register" class="form-group" action="/register-post" method="POST">
                 <div class="tabs">
                     <a href="/login" id="login">
@@ -32,6 +33,7 @@
                 </div>
                 <input type="submit" id="submit" value="Register" @click="doRegister" />
             </form>
+        </div>
     </main>
 </template>
 

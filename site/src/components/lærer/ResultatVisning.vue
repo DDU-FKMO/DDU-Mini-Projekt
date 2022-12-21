@@ -1,4 +1,5 @@
 <template>
+    <div class="content" id="green">
     <h2>Resultater - {{ prøveData.questions.testName }}</h2>
     <div class="questions">
         <h3>Spørgsmål</h3>
@@ -36,6 +37,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </template>
 

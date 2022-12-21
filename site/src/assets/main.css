@@ -14,15 +14,7 @@ body {
 
 main {
     width: 100%;
-    min-height: 85vh;
-    padding: 0 3rem 0 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    background-color: var(--color-background-accent-soft);
-    color:var( --color-text);
+    height: 85vh;
 }
 
 nav {
@@ -37,7 +29,6 @@ nav {
 }
 nav a {
     height: 100%;
-    color: var(--color-white-900);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,14 +37,12 @@ nav a {
     font-weight: 500;
     flex: auto;
     border-radius: 1rem;
+    color:var(--color-white-900);
     transition: background-color 500ms, font-weight 300ms;
 }
 nav a:hover {
-    background-color: var(--color-background-accent);
+    background-color:var(--color-white-200);
     font-weight: 700;
-}
-
-@media (max-width: 1024px) {
 }
 
 /* Checkbox */
@@ -118,4 +107,62 @@ nav a:hover {
     border-color: var(--color-border-soft);
     cursor: not-allowed;
     text-decoration: line-through;
+}
+
+
+/* color palettes */
+#blue{
+    --color-background-accent: var(--color-blue-300);
+    --color-background-accent-soft: var(--color-blue-100);
+    
+    --color-border: var(--color-blue-500);
+    --color-border-soft: var(--color-blue-300);
+    --color-border-hover: var(--color-blue-700);
+    
+    --color-heading: var(--color-blue-700);
+    --color-text:var(--color-blue-900);
+    --color-text-accent: var(--color-blue-500);
+}
+
+#red{
+    --color-background-accent: var(--color-red-300);
+    --color-background-accent-soft: var(--color-red-100);
+    
+    --color-border: var(--color-red-500);
+    --color-border-soft: var(--color-red-300);
+    --color-border-hover: var(--color-red-700);
+    
+    --color-heading: var(--color-red-700);
+    --color-text:var(--color-red-900);
+    --color-text-accent: var(--color-red-500);
+}
+
+#green{
+    --color-background-accent: var(--color-green-300);
+    --color-background-accent-soft: var(--color-green-100);
+    
+    --color-border: var(--color-green-500);
+    --color-border-soft: var(--color-green-300);
+    --color-border-hover: var(--color-green-700);
+    
+    --color-heading: var(--color-green-700);
+    --color-text:var(--color-green-900);
+    --color-text-accent: var(--color-green-500);
+
+    background-color: var(--color-background-accent-soft);
+    color:var( --color-text);
+}
+
+/* styling content */
+div.content{
+    width: 100%;
+    height: 100%;
+    padding: 0 3rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color:var(--color-background-accent);
+    color:var(--color-text);
 }

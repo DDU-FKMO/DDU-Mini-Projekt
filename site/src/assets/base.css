@@ -1,31 +1,33 @@
 :root {
-    --color-green-900:#10424a;
-    --color-green-700:#258790;
-    --color-green-500:#26b6bb;
-    --color-green-300:#90ced1;
-    --color-green-100:#d6f5f0;
+    --color-green-900: #10424a;
+    --color-green-700: #258790;
+    --color-green-500: #26b6bb;
+    --color-green-300: #90ced1;
+    --color-green-100: #d6f5f0;
 
-    --color-red-900:#472d2d;
-    --color-red-700:#ff4d4d;
-    --color-red-500:#ff6b6b;
-    --color-red-300:#ff9f9f;
+    --color-red-900: #472d2d;
+    --color-red-700: #ff4d4d;
+    --color-red-500: #ff6b6b;
+    --color-red-300: #ff9f9f;
     --color-red-100: #ffc8c8;
 
     --color-blue-900:#09326b;
     --color-blue-700:#074b94;
     --color-blue-500:#0763a5;
-    --color-blue-300:#6392c5;
+    --color-blue-300:#9abde2;
     --color-blue-100:#d6ebfa;
 
     --color-yellow-500:#f89847;
-    --color-white-100:#f8f8f8;
+    --color-white-900:#000000;
     --color-white-200:#f1f1f1;
+    --color-white-100:#f8f8f8;
 
     --color-background-soft: var(--color-white-100:);
     --section-gap: 160px;
 }
 
 :root {
+    --color-background-soft: var(--color-white-100);
     --color-background-accent: var(--color-red-300);
     --color-background-accent-soft: var(--color-red-100);
 
@@ -34,7 +36,7 @@
     --color-border-hover: var(--color-red-700);
 
     --color-heading: var(--color-red-700);
-    --color-text:var(--color-red-900);
+    --color-text: var(--color-red-900);
     --color-text-accent: var(--color-red-500);
 }
 

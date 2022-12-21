@@ -1,5 +1,6 @@
 <template>
     <main>
+        <div class="content" id="blue">
         <form name="login" action="/login-post" method="POST">
             <div class="tabs">
                 <a href="/login" id="login">
@@ -21,6 +22,7 @@
             </div>
             <input type="submit" id="submit" value="Login" />
         </form>
+        </div>
     </main>
 </template>
 
